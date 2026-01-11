@@ -6,6 +6,10 @@
 
 **TrollBoss** is a comprehensive, open-source trolling plugin for Minecraft servers, specifically designed for Paper and Spigot 1.21. It offers over 50 unique ways to prank and troll players, ranging from simple lightning bolts to complex alien abductions.
 
+Download from:
+[Spigot](https://www.spigotmc.org/resources/trollboss.47423/)
+[Bukkit](https://dev.bukkit.org/projects/troll-extreme)
+
 ## 🚀 Features
 
 - **Massive Troll Library:** Over 50 different troll commands and effects.

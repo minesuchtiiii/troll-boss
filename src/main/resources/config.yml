@@ -1,0 +1,11 @@
+# Some options you can edit
+# Define if the plugin should automatically update when a new version is available
+# default: true
+Auto-Update: true
+
+# Define if operators can be trolled or not
+# default: true
+Troll-Operators: true
+
+# Used for the statistics, should not be touched
+Trolls: 0

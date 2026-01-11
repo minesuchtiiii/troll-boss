@@ -1,0 +1,242 @@
+name: TrollBoss
+version: '${project.version}'
+main: me.minesuchtiiii.trollboss.main.Main
+api-version: '1.21'
+authors: [ Minesuchtiiii ]
+
+commands:
+  troll:
+    description: Main command of this plugin
+    usage: /<command>
+  burn:
+    description: To burn yourself or another player
+    usage: /<command> <player>
+  freeze:
+    description: To freeze yourself or another player
+    usage: /<command> <player>
+  bolt:
+    description: To bolt yourself or another player
+    usage: /<command> <player>
+  special:
+    description: To add the special to yourself or another player
+    usage: /<command> | /<command> <number> <player>
+  boom:
+    description: To create an explosion at your location or at another player his location
+    usage: /<command> <player>
+  push:
+    description: To push yourself or another player
+    usage: /<command> <player
+  fakeop:
+    description: To fake op a player
+    usage: /<command> <player>
+  fakedeop:
+    description: To fake deop a player
+    usage: /<command> <player>
+  launch:
+    description: To launch a player
+    usage: /<command> <player>
+  spam:
+    description: To spam a player with random messages
+    usage: /<command> <player> <amount>
+  gokill:
+    description: To kill a player in a given delay
+    usage: /<command> <player> <delay>
+  switch:
+    description: To switch two player's locations
+    usage: /<command> <player> <player>
+  trollkick:
+    description: to kick a player with a special message
+    usage: /<command> <player>
+  badapple:
+    description: to add to your or another player his inventory an apple which will kill him
+    usage: /<command> | /<command> <player>
+  denymove:
+    description: to deny a player to move
+    usage: /<command> <player> <delay>
+  potatotroll:
+    description: to replace everything in a player his inventory to a potato
+    usage: /<command> <player>
+  trap:
+    description: to surround a player by blocks
+    usage: /<command> <player> <delay>
+  tptroll:
+    description: to get an item which shoots snowballs and if they hit a player he will get teleported to you
+    usage: /<command>
+  infect:
+    description: to add a player some potion effects
+    usage: /<command> <player> <time>
+  herobrine:
+    description: to become herobrine
+    usage: /<command> <player>
+  fakerestart:
+    description: to simulate a fake restart where all players except the one who run the command will get kicked
+    usage: /<command> <time>
+  turn:
+    description: to turn a player
+    usage: /<command> <player>
+  starve:
+    description: to slowly starve a player
+    usage: /<command> <player> <count>
+  hurt:
+    description: to slowly hurt a player
+    usage: /<command> <player> <count>
+  void:
+    description: to remove every block under a player so that he dies in void
+    usage: /<command> <player>
+  pumpkinhead:
+    description: to change the head of a player to a pumpkin
+    usage: /<command> <player>
+  bury:
+    description: to bury a player
+    usage: /<command> <player> <delay>
+  nomine:
+    description: prevents a player from breaking blocks
+    usage: /<command <player> <time>
+  randomtp:
+    description: to random teleport a player for x times
+    usage: /<command> <player> <count>
+  crash:
+    description: to kick a player with a long java error message
+    usage: /<command> <player>
+  freefall:
+    description: to let a player fall down from a certain high
+    usage: /<command> <player> <high>
+  webtrap:
+    description: to trap a player in web
+    usage: /<command> <player> <time>
+  spank:
+    description: to spank a player
+    usage: /<command> <player / all>
+  trample:
+    description: to spawn cows which will trample on the player
+    usage: /<command> <player> <amount>
+  trollop:
+    description: to change the settings whether operators can be trolled or not
+    usage: /<command> <argument>
+  stfu:
+    description: to mute a player
+    usage: /<command> <player>
+  popup:
+    description: to open the inventory of a player
+    usage: /<command> <player>
+  sky:
+    description: to teleport a player to the sky
+    usage: /<command> <player> <time>
+  abduct:
+    description: abducts a player
+    usage: /<command> <player>
+  popular:
+    description: to teleport all players to the target
+    usage: /<command> <player>
+  creeper:
+    description: to spawn creepers at the location of the target
+    usage: /<command> <player>
+  sparta:
+    description: shoots arrows at the target from different locations
+    usage: /<command> <player>
+  trollbows:
+    description: opens inventory where different troll bows can be chosen
+    usage: /<command>
+  drug:
+    description: to drug a player
+    usage: /<command> <player>
+  squidrain:
+    description: to let squids rain on a player
+    usage: /<command> <player> <number>
+  trolltutorial:
+    description: to start the troll tutorial
+    usage: /<command>
+  dropinv:
+    description: to let a player drop all of his items
+    usage: /<command> <player>
+  garbage:
+    description: every message the player writes will be some garbage
+    usage: /<command> <player> <on | off>
+  anvil:
+    description: to drop an anvil on a player
+    usage: /<command> <player>
+  invtext:
+    description: to add a text with items to a players inventory
+    usage: /<command> <player>
+  runforrest:
+    description: keeps the player moving for a minute or he dies
+    usage: /<command> <player> <time>
+  border:
+    description: to teleport a player to the world border
+    usage: /<command> <player>
+  noob:
+    description: to noob a player!
+    usage: /<command> <player>
+  randomtroll:
+    description: to pick a random troll for a player
+    usage: /<command> <player>
+  shlong:
+    description: to shlong a player
+    usage: /<command> <player>
+
+permissions:
+  troll.*:
+    children:
+      troll.troll: true
+      troll.trollhelp: true
+      troll.burn: true
+      troll.freeze: true
+      troll.bolt: true
+      troll.special: true
+      troll.boom: true
+      troll.push: true
+      troll.fakeop: true
+      troll.fakedeop: true
+      troll.launch: true
+      troll.spam: true
+      troll.gokill: true
+      troll.switch: true
+      troll.trollkick: true
+      troll.badapple: true
+      troll.badapple.bypass: true
+      troll.denymove: true
+      troll.potatotroll: true
+      troll.ak47: true
+      troll.trap: true
+      troll.tptroll: true
+      troll.infect: true
+      troll.herobrine: true
+      troll.fakerestart: true
+      troll.turn: true
+      troll.starve: true
+      troll.hurt: true
+      troll.void: true
+      troll.pumpkinhead: true
+      troll.bury: true
+      troll.nomine: true
+      troll.randomtp: true
+      troll.crash: true
+      troll.freefall: true
+      troll.bypass: true
+      troll.webtrap: true
+      troll.blockshooter: true
+      troll.gui: true
+      troll.spank: true
+      troll.trample: true
+      troll.trollopsettings: true
+      troll.statistics: true
+      troll.stfu: true
+      troll.popup: true
+      troll.sky: true
+      troll.abduct: true
+      troll.popular: true
+      troll.creeper: true
+      troll.sparta: true
+      troll.trollbows: true
+      troll.drug: true
+      troll.squidrain: true
+      troll.tutorial: true
+      troll.dropinv: true
+      troll.garbage: true
+      troll.anvil: true
+      troll.invtext: true
+      troll.runforrest: true
+      troll.border: true
+      troll.noob: true
+      troll.randomtroll: true
+      troll.shlong: true

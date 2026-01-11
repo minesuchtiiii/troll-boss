@@ -1,0 +1,98 @@
+package me.minesuchtiiii.trollboss.commands;
+
+import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.utils.StringManager;
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+
+import java.text.DecimalFormat;
+
+public class FakeRestartCommand implements CommandExecutor {
+    private static final int MAX_TIME = 120;
+    private final Main plugin;
+    private int counter;
+    private int remainingTime;
+
+    public FakeRestartCommand(Main plugin) {
+        this.plugin = plugin;
+    }
+
+    @Override
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String cmdLabel, String[] args) {
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage(StringManager.NOPLAYER);
+            return true;
+        }
+
+        if (!player.hasPermission("troll.fakerestart")) {
+            player.sendMessage(StringManager.NOPERM);
+            return true;
+        }
+
+        if (args.length == 0) {
+            player.sendMessage(StringManager.PREFIX + "§eUse §7/fakerestart [time]");
+            return true;
+        }
+
+        if (args.length != 1 || !plugin.isInt(args[0])) {
+            player.sendMessage(StringManager.PREFIX + "§cError! §e" + args[0] + " §cis not a valid number!");
+            return true;
+        }
+
+        if (plugin.isRestarting) {
+            player.sendMessage(StringManager.PREFIX + "§cYou can't do this right now!");
+            return true;
+        }
+
+        int inputTime = Integer.parseInt(args[0]);
+        if (inputTime <= 0) {
+            player.sendMessage(StringManager.PREFIX + "§cNumber has to be bigger than 0!");
+            return true;
+        }
+
+        if (inputTime > MAX_TIME) {
+            player.sendMessage(StringManager.PREFIX + "§cMaximum allowed time is " + MAX_TIME + " seconds!");
+            return true;
+        }
+
+        initiateFakeRestart(player, inputTime);
+        return true;
+    }
+
+    private void initiateFakeRestart(Player player, int time) {
+        this.remainingTime = time + 1;  // Adjust for time alignment
+        this.plugin.addTroll();
+        this.plugin.addStats("Fakerestart", player);
+
+        DecimalFormat decimalFormat = new DecimalFormat("##.##");
+        double timeInMinutes = remainingTime / 60.0D;
+
+        player.sendMessage(StringManager.PREFIX + "§eServer will fakerestart in §7" + (remainingTime - 1) + " §eseconds! §c(~" + decimalFormat.format(timeInMinutes) + " minutes)");
+        plugin.isRestarting = true;
+
+        this.counter = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> performCountdown(player), 20L, 20L);
+    }
+
+    private void performCountdown(Player executor) {
+        remainingTime--;
+
+        if (remainingTime > 0) {
+            announceRestart(remainingTime);
+        } else {
+            Bukkit.broadcastMessage("§7§l[§c§lServer§7§l] §r§6Server is restarting...");
+            Bukkit.getScheduler().cancelTask(counter);
+            plugin.kickSchedu(executor);
+            plugin.isRestarting = false;
+        }
+    }
+
+    private void announceRestart(int time) {
+        if (time == 120 || time == 90 || time == 60 || time == 30 || time <= 10) {
+            plugin.restartMessage(time);
+        }
+    }
+}

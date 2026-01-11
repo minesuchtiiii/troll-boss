@@ -1,6 +1,6 @@
 # TrollBoss
 
-![License](https://img.shields.io/github/license/Minesuchtiiii/TrollBoss)
+![License](https://img.shields.io/github/license/minesuchtiiii/troll-boss)
 ![Version](https://img.shields.io/badge/version-7.2-blue)
 ![Platform](https://img.shields.io/badge/platform-Paper%20%2F%20Spigot-green)
 

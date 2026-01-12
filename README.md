@@ -18,7 +18,7 @@ Download from:
 - **Interactive Tutorial:** Built-in tutorial to help you get started with the plugin.
 - **Troll Bows:** Specialized bows with unique effects like explosions, lightning, and more.
 - **Statistics Tracking:** Keep track of how many times each troll has been used.
-- **Highly Customizable:** Configure whether operators can be trolled and manage auto-updates.
+- **Customizable:** Configure whether operators can be trolled and manage auto-updates.
 
 ## 🛠 Installation
 

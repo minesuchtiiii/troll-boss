@@ -11,6 +11,13 @@ Download from:
 - [Bukkit](https://dev.bukkit.org/projects/troll-extreme)
 - [Modrinth](https://modrinth.com/plugin/trollboss)
 
+## 📝 The Code
+
+Please note that this project is over a decade old and has grown significantly over time. While I’ve refactored some of the older and less optimal parts, I haven’t yet had the opportunity to revisit every function. The overall architecture also has room for improvement, so please excuse its current state.
+
+Contributions and collaborative optimization efforts are very welcome 🙂
+
+
 ## 🚀 Features
 
 - **Massive Troll Library:** Over 50 different troll commands and effects.

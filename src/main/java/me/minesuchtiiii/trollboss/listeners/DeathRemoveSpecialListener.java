@@ -1,23 +1,20 @@
 package me.minesuchtiiii.trollboss.listeners;
 
 import me.minesuchtiiii.trollboss.items.AK47Item;
-import org.bukkit.Material;
+import me.minesuchtiiii.trollboss.items.BlockShooterItem;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 
 public class DeathRemoveSpecialListener implements Listener {
 
     @EventHandler
     public void onDeathCheckSpecials(PlayerDeathEvent e) {
-        final ItemStack blaze = new ItemStack(Material.BLAZE_ROD);
-        final ItemMeta blazemeta = blaze.getItemMeta();
-        blazemeta.setDisplayName("§cBlock Shooter");
-        blaze.setItemMeta(blazemeta);
-        e.getDrops().removeIf(AK47Item::isAK47);
-        e.getDrops().remove(blaze);
+        e.getDrops().removeIf(item -> {
+            final PersistentDataContainer pdc = item.getItemMeta().getPersistentDataContainer();
+            return AK47Item.isAK47(pdc) || BlockShooterItem.isBlockShooter(pdc);
+        });
     }
 
 }

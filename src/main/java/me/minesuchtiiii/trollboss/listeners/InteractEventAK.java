@@ -11,7 +11,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
 
 public class InteractEventAK implements Listener {
 
@@ -24,7 +23,7 @@ public class InteractEventAK implements Listener {
 
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return;
-        if (!meta.getPersistentDataContainer().has(AK47Item.AK47_KEY,PersistentDataType.BYTE)) return;
+        if (!AK47Item.isAK47(meta)) return;
 
         Player p = e.getPlayer();
         if (!p.hasPermission("troll.ak47")) return;

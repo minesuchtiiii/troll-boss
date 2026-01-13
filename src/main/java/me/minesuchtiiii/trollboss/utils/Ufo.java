@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.utils;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -13,9 +13,9 @@ import java.util.UUID;
 // Should probably be replaced by using a schematic and FAWE
 public class Ufo {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public Ufo(Player player, Main plugin) {
+    public Ufo(Player player, TrollBoss plugin) {
 
         this.plugin = plugin;
         UUID playerUUID = player.getUniqueId();
@@ -375,4 +375,3 @@ public class Ufo {
         }
     }
 }
-

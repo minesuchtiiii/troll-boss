@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -24,9 +24,9 @@ public class TptrollCommand implements CommandExecutor {
             "§7he will be teleported to you"
     );
     private static final long ITEM_DELAY_TICKS = 40L;
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public TptrollCommand(Main plugin) {
+    public TptrollCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

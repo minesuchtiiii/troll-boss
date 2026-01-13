@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -12,9 +12,9 @@ import org.jetbrains.annotations.NotNull;
 public class InvtextCommand implements CommandExecutor {
 
     private static final String COMMAND_NAME = "invtext";
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public InvtextCommand(Main plugin) {
+    public InvtextCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

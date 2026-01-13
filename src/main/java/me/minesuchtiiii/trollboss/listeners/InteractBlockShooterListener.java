@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.listeners;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
@@ -14,10 +14,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class InteractBlockShooterListener implements Listener {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
     int remove = 3;
 
-    public InteractBlockShooterListener(Main plugin) {
+    public InteractBlockShooterListener(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

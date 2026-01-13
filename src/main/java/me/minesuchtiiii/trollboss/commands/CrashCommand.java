@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -11,9 +11,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class CrashCommand implements CommandExecutor {
     private static final String KICK_MESSAGE = "§cInternal exception: java.net.SocketException: Connection reset. Restart your game.";
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public CrashCommand(Main plugin) {
+    public CrashCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import me.minesuchtiiii.trollboss.utils.Ufo;
 import org.bukkit.*;
@@ -17,10 +17,10 @@ import java.util.Objects;
 public class AbductCommand implements CommandExecutor {
 
     private static final int ABDUCTION_DURATION = 85;
-    private final Main plugin;
+    private final TrollBoss plugin;
     private int task;
 
-    public AbductCommand(Main plugin) {
+    public AbductCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 
@@ -96,7 +96,7 @@ public class AbductCommand implements CommandExecutor {
         target.addPotionEffect(levitation);
         task = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             startY[0] = (int) target.getLocation().getY() + 4;
-            Main.spawnAbductParticlesWide(target, startY[0], goalY + 8);
+            TrollBoss.spawnAbductParticlesWide(target, startY[0], goalY + 8);
             target.spawnParticle(Objects.requireNonNull(Registry.PARTICLE_TYPE.get(NamespacedKey.minecraft("elder_guardian"))), target.getLocation(), 1, null);
             target.playSound(target.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, (float) 0.67, 1);
 

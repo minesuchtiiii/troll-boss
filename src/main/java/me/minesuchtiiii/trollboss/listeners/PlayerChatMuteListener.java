@@ -4,14 +4,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 
 @SuppressWarnings("deprecation")
 public class PlayerChatMuteListener implements Listener {
 
-	private final Main plugin;
+	private final TrollBoss plugin;
 
-	public PlayerChatMuteListener(Main plugin) {
+	public PlayerChatMuteListener(TrollBoss plugin) {
 
 		this.plugin = plugin;
 

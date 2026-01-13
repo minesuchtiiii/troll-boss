@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.listeners;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -14,9 +14,9 @@ import java.util.UUID;
 
 public class GuiListener implements Listener {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public GuiListener(Main plugin) {
+    public GuiListener(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

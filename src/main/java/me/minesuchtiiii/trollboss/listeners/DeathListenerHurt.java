@@ -1,16 +1,16 @@
 
 package me.minesuchtiiii.trollboss.listeners;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class DeathListenerHurt implements Listener {
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public DeathListenerHurt(Main plugin) {
+    public DeathListenerHurt(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

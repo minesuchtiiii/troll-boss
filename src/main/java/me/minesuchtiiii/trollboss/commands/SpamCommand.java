@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -15,10 +15,10 @@ public class SpamCommand implements CommandExecutor {
     private static final String ERROR_INVALID_NUMBER = StringManager.PREFIX + "§cCan't use that number! %s";
     private static final String ERROR_ALREADY_SPAMMED = StringManager.PREFIX + "§cThis player is already being spammed!";
 
-    private final Main plugin;
+    private final TrollBoss plugin;
     private final int maxSpam;
 
-    public SpamCommand(Main plugin) {
+    public SpamCommand(TrollBoss plugin) {
         this.plugin = plugin;
         this.maxSpam = 100;
     }

@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.utils;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import org.bukkit.Bukkit;
 
 import java.io.IOException;
@@ -11,10 +11,10 @@ import java.util.function.Consumer;
 
 public class UpdateChecker {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
     private final int resourceID;
 
-    public UpdateChecker(Main plugin, int resourceID) {
+    public UpdateChecker(TrollBoss plugin, int resourceID) {
         this.plugin = plugin;
         this.resourceID = resourceID;
     }

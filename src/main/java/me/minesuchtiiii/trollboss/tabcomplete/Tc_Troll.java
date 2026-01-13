@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.tabcomplete;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -12,9 +12,9 @@ import java.util.List;
 
 public class Tc_Troll implements TabCompleter {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public Tc_Troll(Main plugin) {
+    public Tc_Troll(TrollBoss plugin) {
 
         this.plugin = plugin;
     }

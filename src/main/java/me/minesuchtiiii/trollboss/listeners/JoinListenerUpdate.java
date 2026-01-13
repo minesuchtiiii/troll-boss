@@ -7,12 +7,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 
 public class JoinListenerUpdate implements Listener {
-	private final Main plugin;
+	private final TrollBoss plugin;
 
-	public JoinListenerUpdate(Main plugin) {
+	public JoinListenerUpdate(TrollBoss plugin) {
 		this.plugin = plugin;
 	}
 

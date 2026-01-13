@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -15,9 +15,9 @@ public class TrollCommand implements CommandExecutor {
     private static final String PERMISSION_STATISTICS = "troll.statistics";
     private static final String PERMISSION_GUI = "troll.gui";
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public TrollCommand(Main plugin) {
+    public TrollCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

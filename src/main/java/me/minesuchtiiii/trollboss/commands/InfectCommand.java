@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -18,9 +18,9 @@ public class InfectCommand implements CommandExecutor {
     private static final long SCHEDULER_DELAY = 40L;
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("##.##");
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public InfectCommand(Main plugin) {
+    public InfectCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

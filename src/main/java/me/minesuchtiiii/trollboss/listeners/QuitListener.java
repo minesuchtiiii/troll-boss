@@ -5,12 +5,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 
 public class QuitListener implements Listener {
-	private final Main plugin;
+	private final TrollBoss plugin;
 
-	public QuitListener(Main plugin) {
+	public QuitListener(TrollBoss plugin) {
 		this.plugin = plugin;
 	}
 

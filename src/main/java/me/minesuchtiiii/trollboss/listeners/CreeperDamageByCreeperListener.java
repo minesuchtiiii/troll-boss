@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.listeners;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import org.bukkit.entity.Creeper;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,9 +8,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class CreeperDamageByCreeperListener implements Listener {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public CreeperDamageByCreeperListener(Main plugin) {
+    public CreeperDamageByCreeperListener(TrollBoss plugin) {
 
         this.plugin = plugin;
     }

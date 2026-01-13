@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,9 +16,9 @@ import org.jetbrains.annotations.NotNull;
 public class SpecialCommand implements CommandExecutor {
     private static final String SPECIAL_ITEM_NAME_1 = "§cAK-47";
     private static final String SPECIAL_ITEM_NAME_2 = "§cBlock Shooter";
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public SpecialCommand(Main plugin) {
+    public SpecialCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

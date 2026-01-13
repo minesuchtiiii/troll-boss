@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -17,9 +17,9 @@ public class SkyCommand implements CommandExecutor {
     private static final int MAX_TIME = 3600;
     private static final int TICKS_PER_SECOND = 20;
     private static final String WRONG_USAGE = StringManager.PREFIX + "§eUse §7/sky [player] [time]";
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public SkyCommand(Main plugin) {
+    public SkyCommand(TrollBoss plugin) {
 
         this.plugin = plugin;
 

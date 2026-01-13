@@ -5,14 +5,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 
 @SuppressWarnings("deprecation")
 public class DenyPickupListener implements Listener {
 
-	private final Main plugin;
+	private final TrollBoss plugin;
 
-	public DenyPickupListener(Main plugin) {
+	public DenyPickupListener(TrollBoss plugin) {
 
 		this.plugin = plugin;
 

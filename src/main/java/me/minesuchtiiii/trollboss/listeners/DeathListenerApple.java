@@ -5,12 +5,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 
 public class DeathListenerApple implements Listener {
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public DeathListenerApple(Main plugin) {
+    public DeathListenerApple(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -18,10 +18,10 @@ public class GokillCommand implements CommandExecutor {
     private static final String ALREADY_ACTIVE = StringManager.PREFIX + "§cCan't do this right now!";
     private static final String MAX_VALUE_ERROR = StringManager.PREFIX + "§cCan't use that number, max allowed is %d!";
 
-    private final Main plugin;
+    private final TrollBoss plugin;
     private final int maxDelay = 3600;
 
-    public GokillCommand(Main plugin) {
+    public GokillCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

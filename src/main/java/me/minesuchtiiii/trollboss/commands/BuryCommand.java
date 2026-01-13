@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -14,9 +14,9 @@ public class BuryCommand implements CommandExecutor {
 
     private static final int MAX_BURY_TIME = 3600; // Max bury time in seconds (1hr)
     private static final int DEFAULT_BURY_DEPTH = 4; // Default bury depth in blocks
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public BuryCommand(Main plugin) {
+    public BuryCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

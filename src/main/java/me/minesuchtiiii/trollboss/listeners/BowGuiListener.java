@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.listeners;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -16,9 +16,9 @@ import java.util.ArrayList;
 
 public class BowGuiListener implements Listener {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public BowGuiListener(Main plugin) {
+    public BowGuiListener(TrollBoss plugin) {
 
         this.plugin = plugin;
     }

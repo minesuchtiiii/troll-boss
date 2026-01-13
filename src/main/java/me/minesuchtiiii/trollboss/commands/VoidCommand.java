@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -14,13 +14,13 @@ import org.jetbrains.annotations.NotNull;
 public class VoidCommand implements CommandExecutor {
     private static final long BLOCK_BREAK_DELAY = 4L; // Delay for breaking blocks
     private static final long BLOCK_REBUILD_DELAY = 2L; // Delay for rebuilding blocks
-    private final Main plugin;
+    private final TrollBoss plugin;
     private int voidScheduler;
     private int voidRebuildScheduler;
     private int blockBreakCounter = 0;
     private int blockRebuildCounter = 0;
 
-    public VoidCommand(Main plugin) {
+    public VoidCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.listeners;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import org.bukkit.Material;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.EventHandler;
@@ -10,9 +10,9 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class AnvilBlockLandListener implements Listener {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public AnvilBlockLandListener(Main plugin) {
+    public AnvilBlockLandListener(TrollBoss plugin) {
 
         this.plugin = plugin;
     }

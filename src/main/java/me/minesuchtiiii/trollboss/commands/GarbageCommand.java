@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -11,9 +11,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class GarbageCommand implements CommandExecutor {
     private static final String USAGE_MESSAGE = StringManager.PREFIX + "§eUse §7/garbage [player] [on | off]";
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public GarbageCommand(Main plugin) {
+    public GarbageCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

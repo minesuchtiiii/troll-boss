@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.listeners;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,9 +9,9 @@ import org.bukkit.event.player.PlayerChatEvent;
 @SuppressWarnings("deprecation")
 public class ChatListener implements Listener {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public ChatListener(Main plugin) {
+    public ChatListener(TrollBoss plugin) {
 
         this.plugin = plugin;
     }

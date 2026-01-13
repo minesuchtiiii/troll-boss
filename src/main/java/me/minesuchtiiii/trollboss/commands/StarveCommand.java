@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -12,10 +12,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class StarveCommand implements CommandExecutor {
     private static final int MAX_COUNT = 20;
-    private final Main plugin;
+    private final TrollBoss plugin;
     private int foodScheduler;
 
-    public StarveCommand(Main plugin) {
+    public StarveCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

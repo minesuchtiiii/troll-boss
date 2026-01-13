@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -17,12 +17,12 @@ public class SquidrainCommand implements CommandExecutor {
     private static final long SCHEDULER_PERIOD = 3L;
     private static final int SQUIDS_SPAWN_HEIGHT = 25;
 
-    private final Main plugin;
+    private final TrollBoss plugin;
     private final int maxSquidsAllowed = 100;
     private int spawnRounds = 0;
     private int scheduledTaskId;
 
-    public SquidrainCommand(Main plugin) {
+    public SquidrainCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

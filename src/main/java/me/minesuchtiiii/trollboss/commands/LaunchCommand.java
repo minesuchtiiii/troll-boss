@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -11,9 +11,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class LaunchCommand implements CommandExecutor {
     private static final String NOT_ENOUGH_PLAYERS_MSG = StringManager.PREFIX + "§cNot enough players online!";
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public LaunchCommand(Main plugin) {
+    public LaunchCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

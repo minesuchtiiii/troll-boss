@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -19,9 +19,9 @@ public class NomineCommand implements CommandExecutor {
     private static final String NOT_A_NUMBER = "§cError! §e";
     private static final String MINING_BLOCKED_MESSAGE = " §ewon't be able to mine for §7";
     private static final int MAX_TIME = 3600;
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public NomineCommand(Main plugin) {
+    public NomineCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

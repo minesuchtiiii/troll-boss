@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -14,11 +14,11 @@ import java.util.Random;
 
 public class RandomTpCommand implements CommandExecutor {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
     int schedu;
     int max = 50;
 
-    public RandomTpCommand(Main plugin) {
+    public RandomTpCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

@@ -6,13 +6,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 
 public class JoinListenerWhenCrashed implements Listener {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public JoinListenerWhenCrashed(Main plugin) {
+    public JoinListenerWhenCrashed(TrollBoss plugin) {
 
         this.plugin = plugin;
     }

@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -14,9 +14,9 @@ import org.jetbrains.annotations.NotNull;
 public class FreefallCommand implements CommandExecutor {
 
     private static final int MAX_HEIGHT = 10000;
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public FreefallCommand(Main plugin) {
+    public FreefallCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

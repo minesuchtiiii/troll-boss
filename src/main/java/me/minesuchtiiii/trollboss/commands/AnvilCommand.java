@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -17,9 +17,9 @@ import org.jetbrains.annotations.NotNull;
 public class AnvilCommand implements CommandExecutor {
     private static final String CANNOT_EXECUTE_NOW = StringManager.PREFIX + "§cCan't do this right now!";
     private static final String USE_ANVIL_COMMAND = StringManager.PREFIX + "§eUse §7/anvil [player]";
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public AnvilCommand(Main plugin) {
+    public AnvilCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

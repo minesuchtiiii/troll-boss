@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.listeners;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,9 +9,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class StatisticsGuiListener implements Listener {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public StatisticsGuiListener(Main plugin) {
+    public StatisticsGuiListener(TrollBoss plugin) {
 
         this.plugin = plugin;
     }

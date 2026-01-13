@@ -5,13 +5,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 
 public class RespawnListenerAnvil implements Listener {
 
-	private final Main plugin;
+	private final TrollBoss plugin;
 
-	public RespawnListenerAnvil(Main plugin) {
+	public RespawnListenerAnvil(TrollBoss plugin) {
 
 		this.plugin = plugin;
 	}

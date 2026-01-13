@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -15,9 +15,9 @@ public class DenymoveCommand implements CommandExecutor {
     private static final String INSUFFICIENT_ARGS_MSG = StringManager.PREFIX + "§eUse §7/denymove [player] [delay]";
     private static final String INVALID_NUMBER_MSG_TEMPLATE = StringManager.PREFIX + "§cError! §e%s §cis not a number!";
     private static final int MAX_DURATION = 3600;
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public DenymoveCommand(Main plugin) {
+    public DenymoveCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -14,10 +14,10 @@ import org.jetbrains.annotations.NotNull;
 import java.text.DecimalFormat;
 
 public class TrapCommand implements CommandExecutor {
-    private final Main plugin;
+    private final TrollBoss plugin;
     int max = 3600;
 
-    public TrapCommand(Main plugin) {
+    public TrapCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

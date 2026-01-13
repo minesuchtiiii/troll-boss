@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -11,9 +11,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class ShlongCommand implements CommandExecutor {
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public ShlongCommand(Main plugin) {
+    public ShlongCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

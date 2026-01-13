@@ -7,12 +7,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 
 public class HerobrineMoveListener implements Listener {
-	private final Main plugin;
+	private final TrollBoss plugin;
 
-	public HerobrineMoveListener(Main plugin) {
+	public HerobrineMoveListener(TrollBoss plugin) {
 		this.plugin = plugin;
 	}
 

@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -18,10 +18,10 @@ public class HurtCommand implements CommandExecutor {
     private static final long TASK_INTERVAL = 25L;
     private static final int MIN_COUNT = 1;
     private static final int MAX_COUNT = 20;
-    private final Main plugin;
+    private final TrollBoss plugin;
     private int hurtScheduler;
 
-    public HurtCommand(Main plugin) {
+    public HurtCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

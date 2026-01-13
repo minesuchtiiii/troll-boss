@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -16,9 +16,9 @@ public class HerobrineCommand implements CommandExecutor {
     private static final String PREFIX_SET = "§eSet §7";
     private static final String PREFIX_UNSET = "§ePlayer §7";
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public HerobrineCommand(Main plugin) {
+    public HerobrineCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

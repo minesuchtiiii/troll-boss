@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -13,9 +13,9 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 public class SpartaCommand implements CommandExecutor {
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public SpartaCommand(Main plugin) {
+    public SpartaCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

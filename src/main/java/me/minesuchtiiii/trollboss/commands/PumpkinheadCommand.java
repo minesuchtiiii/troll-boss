@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -14,9 +14,9 @@ import org.jetbrains.annotations.NotNull;
 public class PumpkinheadCommand implements CommandExecutor {
 
     private static final ItemStack PUMPKIN_HEAD = new ItemStack(Material.CARVED_PUMPKIN);
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public PumpkinheadCommand(Main plugin) {
+    public PumpkinheadCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -15,10 +15,10 @@ import java.util.Map;
 public class RandomtrollCommand implements CommandExecutor {
     private static final String PREFIX = StringManager.PREFIX;
     private static final String INCORRECT_USAGE = PREFIX + "§eUse §7/randomtroll [player]";
-    private final Main plugin;
+    private final TrollBoss plugin;
     private final Map<Integer, String> trollCommands = new HashMap<>();
 
-    public RandomtrollCommand(Main plugin) {
+    public RandomtrollCommand(TrollBoss plugin) {
         this.plugin = plugin;
         initializeTrollCommands();
     }

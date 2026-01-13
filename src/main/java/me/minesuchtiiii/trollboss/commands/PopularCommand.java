@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -14,9 +14,9 @@ public class PopularCommand implements CommandExecutor {
     private static final String PERMISSION_POPULAR = "troll.popular";
     private static final String TROLL_ACTION = "Popular";
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public PopularCommand(Main plugin) {
+    public PopularCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

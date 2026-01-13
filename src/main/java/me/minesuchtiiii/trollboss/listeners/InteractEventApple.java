@@ -1,8 +1,7 @@
 package me.minesuchtiiii.trollboss.listeners;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import org.bukkit.Bukkit;
-import org.bukkit.EntityEffect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -15,9 +14,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 
 public class InteractEventApple implements Listener {
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public InteractEventApple(Main plugin) {
+    public InteractEventApple(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

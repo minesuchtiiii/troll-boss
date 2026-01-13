@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -11,9 +11,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class TrolltutorialCommand implements CommandExecutor {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public TrolltutorialCommand(Main plugin) {
+    public TrolltutorialCommand(TrollBoss plugin) {
 
         this.plugin = plugin;
     }

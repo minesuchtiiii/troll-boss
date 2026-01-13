@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -13,9 +13,9 @@ public class BoomCommand implements CommandExecutor {
     private static final float EXPLOSION_POWER = 3.0F;
     private static final long EXPLOSION_DELAY = 40L;
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public BoomCommand(Main plugin) {
+    public BoomCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

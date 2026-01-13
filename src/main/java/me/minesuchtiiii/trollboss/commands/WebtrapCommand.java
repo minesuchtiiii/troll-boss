@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -21,9 +21,9 @@ public class WebtrapCommand implements CommandExecutor {
     private static final String MAX_EXCEEDED = StringManager.PREFIX + "§cCan't use that number, max allowed is " + MAX_TIME + "!";
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("##.##");
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public WebtrapCommand(Main plugin) {
+    public WebtrapCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

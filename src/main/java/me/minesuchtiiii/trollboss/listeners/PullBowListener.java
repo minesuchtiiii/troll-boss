@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.listeners;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -14,9 +14,9 @@ import org.bukkit.util.Vector;
 
 public class PullBowListener implements Listener {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public PullBowListener(Main plugin) {
+    public PullBowListener(TrollBoss plugin) {
 
         this.plugin = plugin;
     }

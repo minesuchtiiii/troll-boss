@@ -1,6 +1,6 @@
 name: TrollBoss
 version: '${project.version}'
-main: me.minesuchtiiii.trollboss.main.Main
+main: me.minesuchtiiii.trollboss.TrollBoss
 api-version: '1.21'
 authors: [ Minesuchtiiii ]
 

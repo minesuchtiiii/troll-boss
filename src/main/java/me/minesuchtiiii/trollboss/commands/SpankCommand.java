@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -13,9 +13,9 @@ public class SpankCommand implements CommandExecutor {
 
     private static final String SPANK_MESSAGE = "§c§lYou have been spanked you naughty miner!";
     private static final double SPANK_DAMAGE = 4.0;
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public SpankCommand(Main plugin) {
+    public SpankCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

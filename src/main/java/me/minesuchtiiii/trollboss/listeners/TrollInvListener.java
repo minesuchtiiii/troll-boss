@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.listeners;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,9 +13,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class TrollInvListener implements Listener {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public TrollInvListener(Main plugin) {
+    public TrollInvListener(TrollBoss plugin) {
 
         this.plugin = plugin;
     }

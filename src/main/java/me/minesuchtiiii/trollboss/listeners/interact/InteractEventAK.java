@@ -9,8 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class InteractEventAK implements Listener {
 
@@ -18,12 +16,7 @@ public class InteractEventAK implements Listener {
     public void onPlayerIronAxeClick(PlayerInteractEvent e) {
         if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 
-        ItemStack item = e.getItem();
-        if (item == null) return;
-
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return;
-        if (!AK47Item.isAK47(meta)) return;
+        if (!AK47Item.isAK47(e.getItem())) return;
 
         Player p = e.getPlayer();
         if (!p.hasPermission("troll.ak47")) return;

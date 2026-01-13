@@ -11,7 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class InteractBlockShooterListener implements Listener {
 
@@ -29,9 +28,8 @@ public class InteractBlockShooterListener implements Listener {
         if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK) return;
 
         Player player = e.getPlayer();
-        ItemStack hand = e.getItem();
 
-        if (!BlockShooterItem.isBlockShooter(hand)) return;
+        if (!BlockShooterItem.isBlockShooter(e.getItem())) return;
         if (!player.hasPermission("troll.blockshooter")) return;
 
         Location playerLocation = player.getLocation();

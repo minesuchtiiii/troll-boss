@@ -1,4 +1,4 @@
-package me.minesuchtiiii.trollboss.listeners.creeper;
+package me.minesuchtiiii.trollboss.listeners.trollcreeper;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
 import org.bukkit.entity.Creeper;

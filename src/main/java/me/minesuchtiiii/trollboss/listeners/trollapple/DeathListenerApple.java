@@ -1,4 +1,4 @@
-package me.minesuchtiiii.trollboss.listeners.apple;
+package me.minesuchtiiii.trollboss.listeners.trollapple;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

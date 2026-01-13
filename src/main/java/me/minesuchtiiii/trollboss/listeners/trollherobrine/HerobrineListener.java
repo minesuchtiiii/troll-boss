@@ -1,4 +1,4 @@
-package me.minesuchtiiii.trollboss.listeners.herobrine;
+package me.minesuchtiiii.trollboss.listeners.trollherobrine;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

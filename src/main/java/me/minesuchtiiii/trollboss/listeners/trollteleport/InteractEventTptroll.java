@@ -1,4 +1,4 @@
-package me.minesuchtiiii.trollboss.listeners.interact;
+package me.minesuchtiiii.trollboss.listeners.trollteleport;
 
 import me.minesuchtiiii.trollboss.items.TeleportTrollItem;
 import org.bukkit.entity.Snowball;

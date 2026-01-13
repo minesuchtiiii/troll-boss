@@ -30,7 +30,6 @@ public final class AK47Item {
 
     public static boolean isAK47(ItemStack item) {
         if (item == null) return false;
-
         return isAK47(item.getItemMeta());
     }
 

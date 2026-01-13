@@ -29,10 +29,11 @@ public final class BlockShooterItem {
 
     public static boolean isBlockShooter(ItemStack item) {
         if (item == null) return false;
+        return isBlockShooter(item.getItemMeta());
+    }
 
-        ItemMeta meta = item.getItemMeta();
+    public static boolean isBlockShooter(ItemMeta meta) {
         if (meta == null) return false;
-
         return isBlockShooter(meta.getPersistentDataContainer());
     }
 

@@ -23,13 +23,11 @@ public class InteractBlockShooterListener implements Listener {
 
     @EventHandler
     public void onPlayerInteractBlockShooter(PlayerInteractEvent e) {
-
-        Action action = e.getAction();
-        if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK) return;
-
-        Player player = e.getPlayer();
+        if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 
         if (!BlockShooterItem.isBlockShooter(e.getItem())) return;
+
+        Player player = e.getPlayer();
         if (!player.hasPermission("troll.blockshooter")) return;
 
         Location playerLocation = player.getLocation();

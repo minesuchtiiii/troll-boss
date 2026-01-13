@@ -1,4 +1,4 @@
-package me.minesuchtiiii.trollboss.listeners.interact;
+package me.minesuchtiiii.trollboss.listeners.apple;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
 import org.bukkit.Bukkit;

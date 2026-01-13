@@ -1,4 +1,4 @@
-package me.minesuchtiiii.trollboss.listeners.death;
+package me.minesuchtiiii.trollboss.listeners.anvil;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

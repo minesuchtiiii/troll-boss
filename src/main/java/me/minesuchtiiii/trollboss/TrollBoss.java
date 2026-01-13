@@ -2,7 +2,9 @@ package me.minesuchtiiii.trollboss;
 
 import me.minesuchtiiii.trollboss.commands.*;
 import me.minesuchtiiii.trollboss.listeners.anvil.AnvilBlockLandListener;
+import me.minesuchtiiii.trollboss.listeners.anvil.DeathListenerAnvil;
 import me.minesuchtiiii.trollboss.listeners.anvil.RespawnListenerAnvil;
+import me.minesuchtiiii.trollboss.listeners.apple.DeathListenerApple;
 import me.minesuchtiiii.trollboss.listeners.chat.ChatListener;
 import me.minesuchtiiii.trollboss.listeners.chat.PlayerChatMuteListener;
 import me.minesuchtiiii.trollboss.listeners.creeper.CreeperDamageByCreeperListener;
@@ -16,7 +18,7 @@ import me.minesuchtiiii.trollboss.listeners.herobrine.HerobrineListener;
 import me.minesuchtiiii.trollboss.listeners.herobrine.HerobrineMoveListener;
 import me.minesuchtiiii.trollboss.listeners.interact.InteractBlockShooterListener;
 import me.minesuchtiiii.trollboss.listeners.interact.InteractEventAK;
-import me.minesuchtiiii.trollboss.listeners.interact.InteractEventApple;
+import me.minesuchtiiii.trollboss.listeners.apple.InteractEventApple;
 import me.minesuchtiiii.trollboss.listeners.interact.InteractEventTptroll;
 import me.minesuchtiiii.trollboss.listeners.join.JoinListenerUpdate;
 import me.minesuchtiiii.trollboss.listeners.join.JoinListenerWhenCrashed;

@@ -18,8 +18,7 @@ public final class TeleportTrollItem {
 
     public static final NamespacedKey TELEPORT_TROLL_KEY = new NamespacedKey(TrollBoss.getInstance(), "teleport_troll");
 
-    private static final Component NAME =
-            MM.deserialize("<red>Teleport troll item</red>");
+    private static final Component NAME = MM.deserialize("<red>Teleport troll item</red>");
 
     private static final List<Component> LORE = List.of(
             MM.deserialize("<gray>Right-click to shoot snowballs</gray>"),

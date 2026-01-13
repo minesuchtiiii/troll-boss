@@ -1,6 +1,7 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.items.TeleportTrollItem;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -17,12 +18,6 @@ import java.util.List;
 
 public class TptrollCommand implements CommandExecutor {
 
-    private static final String ITEM_NAME = "§cTeleport troll item";
-    private static final List<String> ITEM_LORE = List.of(
-            "§7Rightclick to shoot snowballs",
-            "§7which when they hit a player",
-            "§7he will be teleported to you"
-    );
     private static final long ITEM_DELAY_TICKS = 40L;
     private final TrollBoss plugin;
 
@@ -62,20 +57,9 @@ public class TptrollCommand implements CommandExecutor {
     }
 
     private void giveTrollItemWithDelay(Player giver, Player receiver) {
-        ItemStack item = createTrollItem();
+        ItemStack item = TeleportTrollItem.create();
         plugin.addTroll();
         plugin.addStats("Teleporttroll", giver);
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> receiver.getInventory().addItem(item), ITEM_DELAY_TICKS);
-    }
-
-    private ItemStack createTrollItem() {
-        ItemStack stick = new ItemStack(Material.STICK);
-        ItemMeta meta = stick.getItemMeta();
-        if (meta != null) {
-            meta.setDisplayName(ITEM_NAME);
-            meta.setLore(new ArrayList<>(ITEM_LORE));
-            stick.setItemMeta(meta);
-        }
-        return stick;
     }
 }

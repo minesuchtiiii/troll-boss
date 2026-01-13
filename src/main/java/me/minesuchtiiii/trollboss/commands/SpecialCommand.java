@@ -1,6 +1,7 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.items.AK47Item;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -14,7 +15,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 public class SpecialCommand implements CommandExecutor {
-    private static final String SPECIAL_ITEM_NAME_1 = "§cAK-47";
     private static final String SPECIAL_ITEM_NAME_2 = "§cBlock Shooter";
     private final TrollBoss plugin;
 
@@ -53,7 +53,7 @@ public class SpecialCommand implements CommandExecutor {
 
     private void handleSelfSpecial(Player player, String specialNumber) {
         switch (specialNumber) {
-            case "1" -> giveSpecialItem(player, createSpecialItem(Material.IRON_AXE, SPECIAL_ITEM_NAME_1), "§e#1");
+            case "1" -> giveSpecialItem(player, AK47Item.create(), "§e#1");
             case "2" -> giveSpecialItem(player, createSpecialItem(Material.BLAZE_ROD, SPECIAL_ITEM_NAME_2), "§e#2");
             default -> player.sendMessage(StringManager.PREFIX + "§cInvalid special number!");
         }
@@ -68,8 +68,7 @@ public class SpecialCommand implements CommandExecutor {
 
         switch (specialNumber) {
             case "1" -> {
-                ItemStack item = createSpecialItem(Material.IRON_AXE, SPECIAL_ITEM_NAME_1);
-                giveSpecialItemToTarget(player, target, item, SPECIAL_ITEM_NAME_1);
+                giveSpecialItemToTarget(player, target, AK47Item.create(), AK47Item.NAME_STRING);
             }
             case "2" -> {
                 ItemStack item = createSpecialItem(Material.BLAZE_ROD, SPECIAL_ITEM_NAME_2);

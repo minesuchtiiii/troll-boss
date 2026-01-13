@@ -128,6 +128,11 @@ public class TrollBoss extends JavaPlugin {
     private String version;
     private boolean update;
     private int tutorialTask;
+    private static TrollBoss INSTANCE;
+
+    public static TrollBoss getInstance() {
+        return INSTANCE;
+    }
 
     private static ItemStack getHead(Player p) {
 
@@ -180,7 +185,7 @@ public class TrollBoss extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
+        INSTANCE = this;
         version = Bukkit.getBukkitVersion();
 
         registerEvents();

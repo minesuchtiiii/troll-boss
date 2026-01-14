@@ -1,11 +1,8 @@
 package me.minesuchtiiii.trollboss;
 
-import me.minesuchtiiii.trollboss.commands.*;
+import me.minesuchtiiii.trollboss.commands.manager.RegisterCommands;
 import me.minesuchtiiii.trollboss.listeners.RegisterEvents;
 import me.minesuchtiiii.trollboss.manager.TrollManager;
-import me.minesuchtiiii.trollboss.tabcomplete.Tc_Troll;
-import me.minesuchtiiii.trollboss.tabcomplete.Tc_TrollOp;
-import me.minesuchtiiii.trollboss.tabcomplete.Tc_Trolltutorial;
 import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.GuiItem;
 import me.minesuchtiiii.trollboss.utils.StringManager;
@@ -151,7 +148,7 @@ public class TrollBoss extends JavaPlugin {
         version = Bukkit.getBukkitVersion();
 
         RegisterEvents.register(this);
-        registerCommands();
+        RegisterCommands.register(this);
         saveDefaultConfigFile();
 
         update = getConfig().getBoolean("Auto-Update");
@@ -194,70 +191,6 @@ public class TrollBoss extends JavaPlugin {
         saveDefaultConfig();
         reloadConfig();
         saveConfig();
-
-    }
-
-    private void registerCommands() {
-
-        getCommand("troll").setExecutor(new TrollCommand(this));
-        getCommand("troll").setTabCompleter(new Tc_Troll(this));
-        getCommand("burn").setExecutor(new BurnCommand(this));
-        getCommand("freeze").setExecutor(new FreezeCommand(this));
-        getCommand("bolt").setExecutor(new BoltCommand(this));
-        getCommand("special").setExecutor(new SpecialCommand(this));
-        getCommand("boom").setExecutor(new BoomCommand(this));
-        getCommand("push").setExecutor(new PushCommand(this));
-        getCommand("fakeop").setExecutor(new FakeopCommand(this));
-        getCommand("fakedeop").setExecutor(new FakedeopCommand(this));
-        getCommand("launch").setExecutor(new LaunchCommand(this));
-        getCommand("spam").setExecutor(new SpamCommand(this));
-        getCommand("gokill").setExecutor(new GokillCommand(this));
-        getCommand("switch").setExecutor(new SwitchCommand(this));
-        getCommand("trollkick").setExecutor(new TrollkickCommand(this));
-        getCommand("badapple").setExecutor(new BadappleCommand(this));
-        getCommand("denymove").setExecutor(new DenymoveCommand(this));
-        getCommand("potatotroll").setExecutor(new PotatotrollCommand(this));
-        getCommand("trap").setExecutor(new TrapCommand(this));
-        getCommand("tptroll").setExecutor(new TptrollCommand(this));
-        getCommand("infect").setExecutor(new InfectCommand(this));
-        getCommand("herobrine").setExecutor(new HerobrineCommand(this));
-        getCommand("fakerestart").setExecutor(new FakeRestartCommand(this));
-        getCommand("turn").setExecutor(new TurnCommand(this));
-        getCommand("starve").setExecutor(new StarveCommand(this));
-        getCommand("hurt").setExecutor(new HurtCommand(this));
-        getCommand("void").setExecutor(new VoidCommand(this));
-        getCommand("pumpkinhead").setExecutor(new PumpkinheadCommand(this));
-        getCommand("bury").setExecutor(new BuryCommand(this));
-        getCommand("nomine").setExecutor(new NomineCommand(this));
-        getCommand("randomtp").setExecutor(new RandomTpCommand(this));
-        getCommand("crash").setExecutor(new CrashCommand(this));
-        getCommand("freefall").setExecutor(new FreefallCommand(this));
-        getCommand("webtrap").setExecutor(new WebtrapCommand(this));
-        getCommand("spank").setExecutor(new SpankCommand(this));
-        getCommand("trample").setExecutor(new TrampleCommand(this));
-        getCommand("trollop").setExecutor(new TrollopCommand(this));
-        getCommand("trollop").setTabCompleter(new Tc_TrollOp());
-        getCommand("stfu").setExecutor(new StfuCommand(this));
-        getCommand("popup").setExecutor(new PopupCommand(this));
-        getCommand("sky").setExecutor(new SkyCommand(this));
-        getCommand("abduct").setExecutor(new AbductCommand(this));
-        getCommand("popular").setExecutor(new PopularCommand(this));
-        getCommand("creeper").setExecutor(new CreeperCommand(this));
-        getCommand("sparta").setExecutor(new SpartaCommand(this));
-        getCommand("trollbows").setExecutor(new BowsCommand(this));
-        getCommand("drug").setExecutor(new DrugCommand(this));
-        getCommand("squidrain").setExecutor(new SquidrainCommand(this));
-        getCommand("trolltutorial").setExecutor(new TrolltutorialCommand());
-        getCommand("trolltutorial").setTabCompleter(new Tc_Trolltutorial(this));
-        getCommand("dropinv").setExecutor(new DropinvCommand(this));
-        getCommand("garbage").setExecutor(new GarbageCommand(this));
-        getCommand("anvil").setExecutor(new AnvilCommand(this));
-        getCommand("invtext").setExecutor(new InvtextCommand(this));
-        getCommand("runforrest").setExecutor(new RunforrestCommand(this));
-        getCommand("border").setExecutor(new BorderCommand(this));
-        getCommand("noob").setExecutor(new NoobCommand(this));
-        getCommand("randomtroll").setExecutor(new RandomtrollCommand(this));
-        getCommand("shlong").setExecutor(new ShlongCommand(this));
 
     }
 

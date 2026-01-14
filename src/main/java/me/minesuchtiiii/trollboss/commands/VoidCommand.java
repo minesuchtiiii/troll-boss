@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -83,7 +85,7 @@ public class VoidCommand implements CommandExecutor {
         player.sendMessage(StringManager.PREFIX + "§eKilling §7" + target.getName() + " §ein void!");
 
         this.plugin.isVoid = true;
-        this.plugin.voidDead.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.VOID);
         Location targetLocation = target.getLocation();
         int totalBlocks = calculateBlocksToVoid(targetLocation);
 

@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -68,14 +70,14 @@ public class SkyCommand implements CommandExecutor {
             player.sendMessage(StringManager.FAILDEAD);
             return true;
         }
-        if (plugin.skyTroll.contains(target.getUniqueId())) {
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.SKY)) {
             player.sendMessage(StringManager.PREFIX + "§cCannot troll this player right now!");
             return true;
         }
 
         // Save player's current location
         Location targetLocation = target.getLocation();
-        plugin.skyTroll.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.SKY);
         plugin.skymap.put(targetName, targetLocation);
 
         // Create glass platform
@@ -96,7 +98,7 @@ public class SkyCommand implements CommandExecutor {
 
         // Schedule removal of the troll
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            plugin.skyTroll.remove(target.getUniqueId());
+            TrollManager.deactivate(target.getUniqueId(), TrollType.SKY);
             target.teleport(plugin.skymap.remove(targetName));
             for (Location loc : glassLocations) {
                 loc.getWorld().getBlockAt(loc).setType(Material.AIR);

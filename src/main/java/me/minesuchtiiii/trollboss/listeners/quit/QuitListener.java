@@ -1,5 +1,7 @@
 package me.minesuchtiiii.trollboss.listeners.quit;
 
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,8 +20,8 @@ public class QuitListener implements Listener {
 	public void onQuit(PlayerQuitEvent e) {
 		final Player p = e.getPlayer();
 
-		if (this.plugin.kicked.contains(p.getUniqueId())) {
-			e.setQuitMessage(null);
+		if (TrollManager.isActive(p.getUniqueId(), TrollType.TROLLKICK)) {
+			e.quitMessage(null);
 		}
 	}
 }

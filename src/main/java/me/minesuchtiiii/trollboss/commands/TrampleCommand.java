@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -84,7 +86,7 @@ public class TrampleCommand implements CommandExecutor {
     private void executeTrample(Player player, Player target, int amount) {
         plugin.addTroll();
         plugin.addStats("Trample", player);
-        plugin.trampled.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.TRAMPLE);
         player.sendMessage(StringManager.PREFIX + String.format("§7%d §ecows will trample on §7%s§e!", amount, target.getName()));
         for (int i = 0; i < amount; i++) {
             plugin.spawnCow(target);

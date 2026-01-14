@@ -1,6 +1,9 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.DeathManager;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -11,6 +14,8 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.UUID;
 
 public class SpartaCommand implements CommandExecutor {
     private final TrollBoss plugin;
@@ -60,7 +65,7 @@ public class SpartaCommand implements CommandExecutor {
         plugin.addTroll();
         plugin.addStats("Sparta", player);
         player.sendMessage(StringManager.PREFIX + "§7" + target.getName() + " §ewill enjoy SPARTA!");
-        plugin.spartaTroll.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.SPARTA);
         plugin.spartaArrows.put(target.getUniqueId(), 0);
 
         int arrowAmount = plugin.getRandom(5, 10);
@@ -68,7 +73,7 @@ public class SpartaCommand implements CommandExecutor {
     }
 
     private void handleSpartaArrows(Player target, int arrowAmount) {
-        if (plugin.diedOnSparta.contains(target.getUniqueId())) {
+        if (DeathManager.hasDied(target.getUniqueId(), TrollType.SPARTA)) {
             resetSparta(target);
             return;
         }
@@ -95,8 +100,10 @@ public class SpartaCommand implements CommandExecutor {
 
     private void resetSparta(Player player) {
         Bukkit.getScheduler().cancelTask(plugin.spartaTask);
-        plugin.spartaTroll.remove(player.getUniqueId());
-        plugin.spartaArrows.remove(player.getUniqueId());
-        plugin.diedOnSparta.remove(player.getUniqueId());
+        UUID playerUuid = player.getUniqueId();
+
+        TrollManager.deactivate(playerUuid, TrollType.SPARTA);
+        plugin.spartaArrows.remove(playerUuid);
+        DeathManager.setDead(playerUuid, TrollType.SPARTA);
     }
 }

@@ -1,38 +1,12 @@
 package me.minesuchtiiii.trollboss;
 
 import me.minesuchtiiii.trollboss.commands.*;
-import me.minesuchtiiii.trollboss.listeners.anvil.AnvilBlockLandListener;
-import me.minesuchtiiii.trollboss.listeners.anvil.DeathListenerAnvil;
-import me.minesuchtiiii.trollboss.listeners.trollapple.DeathListenerApple;
-import me.minesuchtiiii.trollboss.listeners.chat.ChatListener;
-import me.minesuchtiiii.trollboss.listeners.chat.PlayerChatMuteListener;
-import me.minesuchtiiii.trollboss.listeners.trollcreeper.CreeperDamageByCreeperListener;
-import me.minesuchtiiii.trollboss.listeners.trollcreeper.CreeperExplodeListener;
-import me.minesuchtiiii.trollboss.listeners.death.*;
-import me.minesuchtiiii.trollboss.listeners.gui.BowGuiListener;
-import me.minesuchtiiii.trollboss.listeners.gui.GuiListener;
-import me.minesuchtiiii.trollboss.listeners.gui.StatisticsGuiListener;
-import me.minesuchtiiii.trollboss.listeners.gui.TrollInvListener;
-import me.minesuchtiiii.trollboss.listeners.trollherobrine.HerobrineListener;
-import me.minesuchtiiii.trollboss.listeners.trollherobrine.HerobrineMoveListener;
-import me.minesuchtiiii.trollboss.listeners.interact.InteractBlockShooterListener;
-import me.minesuchtiiii.trollboss.listeners.interact.InteractEventAK;
-import me.minesuchtiiii.trollboss.listeners.trollapple.InteractEventApple;
-import me.minesuchtiiii.trollboss.listeners.trollteleport.InteractEventTptroll;
-import me.minesuchtiiii.trollboss.listeners.join.JoinListenerUpdate;
-import me.minesuchtiiii.trollboss.listeners.join.JoinListenerWhenCrashed;
-import me.minesuchtiiii.trollboss.listeners.misc.DenyPickupListener;
-import me.minesuchtiiii.trollboss.listeners.misc.MineListener;
-import me.minesuchtiiii.trollboss.listeners.misc.MoveListener;
-import me.minesuchtiiii.trollboss.listeners.projectiles.EntityDamageByBlockShooterListener;
-import me.minesuchtiiii.trollboss.listeners.projectiles.ProjectileBowsHitListener;
-import me.minesuchtiiii.trollboss.listeners.trollteleport.ProjectileHitListener;
-import me.minesuchtiiii.trollboss.listeners.projectiles.PullBowListener;
-import me.minesuchtiiii.trollboss.listeners.quit.QuitListener;
-import me.minesuchtiiii.trollboss.listeners.quit.QuitListenerRestart;
+import me.minesuchtiiii.trollboss.listeners.RegisterEvents;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
 import me.minesuchtiiii.trollboss.tabcomplete.Tc_Troll;
 import me.minesuchtiiii.trollboss.tabcomplete.Tc_TrollOp;
 import me.minesuchtiiii.trollboss.tabcomplete.Tc_Trolltutorial;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import me.minesuchtiiii.trollboss.utils.UpdateChecker;
 import org.bstats.bukkit.Metrics;
@@ -47,7 +21,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -78,38 +51,11 @@ public class TrollBoss extends JavaPlugin {
     private final HashMap<UUID, Inventory> invstores = new HashMap<>();
     public ArrayList<Integer> potatoTroll = new ArrayList<>();
     public ArrayList<String> color = new ArrayList<>();
-    public ArrayList<UUID> booming = new ArrayList<>();
-    public ArrayList<UUID> bury = new ArrayList<>();
-    public ArrayList<UUID> canAnvil = new ArrayList<>();
-    public ArrayList<UUID> crashed = new ArrayList<>();
-    public ArrayList<UUID> dead = new ArrayList<>();
-    public ArrayList<UUID> deadHurt = new ArrayList<>();
-    public ArrayList<UUID> deadMessage = new ArrayList<>();
-    public ArrayList<UUID> denyMove = new ArrayList<>();
-    public ArrayList<UUID> denyPickup = new ArrayList<>();
-    public ArrayList<UUID> diedOnSparta = new ArrayList<>();
-    public ArrayList<UUID> freefall = new ArrayList<>();
-    public ArrayList<UUID> garbageTroll = new ArrayList<>();
-    public ArrayList<UUID> goKill = new ArrayList<>();
-    public ArrayList<UUID> herobrine = new ArrayList<>();
-    public ArrayList<UUID> hunger = new ArrayList<>();
-    public ArrayList<UUID> hurt = new ArrayList<>();
-    public ArrayList<UUID> kicked = new ArrayList<>();
-    public ArrayList<UUID> moveWhileNoobed = new ArrayList<>();
-    public ArrayList<UUID> muted = new ArrayList<>();
-    public ArrayList<UUID> nomine = new ArrayList<>();
-    public ArrayList<UUID> playersBeingAbducted = new ArrayList<>();
-    public ArrayList<UUID> randomtp = new ArrayList<>();
-    public ArrayList<UUID> res = new ArrayList<>();
-    public ArrayList<UUID> runIt = new ArrayList<>();
-    public ArrayList<UUID> skyTroll = new ArrayList<>();
-    public ArrayList<UUID> spartaTroll = new ArrayList<>();
-    public ArrayList<UUID> squidRaining = new ArrayList<>();
-    public ArrayList<UUID> trampled = new ArrayList<>();
+
+    // More things
     public ArrayList<UUID> tutorialPlayers = new ArrayList<>();
     public ArrayList<UUID> usable = new ArrayList<>();
-    public ArrayList<UUID> voidDead = new ArrayList<>();
-    public ArrayList<UUID> webtrap = new ArrayList<>();
+
     public HashMap<Integer, Location> altblockloc = new HashMap<>();
     public HashMap<Integer, Location> block = new HashMap<>();
     public HashMap<Integer, Location> blockloc = new HashMap<>();
@@ -118,7 +64,6 @@ public class TrollBoss extends JavaPlugin {
     public HashMap<Integer, Material> blockmat = new HashMap<>();
     public HashMap<Integer, Material> numbersmat = new HashMap<>();
     public HashMap<Integer, Material> zahlmat = new HashMap<>();
-    public HashMap<Integer, String> randomTrolls = new HashMap<>();
     public HashMap<String, Boolean> rf = new HashMap<>();
     public HashMap<String, Double> yloc = new HashMap<>();
     public HashMap<String, Float> pitch = new HashMap<>();
@@ -214,60 +159,18 @@ public class TrollBoss extends JavaPlugin {
         INSTANCE = this;
         version = Bukkit.getBukkitVersion();
 
-        registerEvents();
+        RegisterEvents.register(this);
         registerCommands();
         saveDefaultConfigFile();
 
         update = getConfig().getBoolean("Auto-Update");
 
         checkForUpdate();
-        addRandomTrolls();
         addSpamStuff();
         check4File();
         check4otherFile();
 
         new Metrics(this, METRICS_ID);
-
-    }
-
-    private void registerEvents() {
-
-        final PluginManager pm = Bukkit.getPluginManager();
-        pm.registerEvents(new QuitListener(this), this);
-        pm.registerEvents(new MoveListener(this), this);
-        pm.registerEvents(new InteractEventAK(), this);
-        pm.registerEvents(new InteractEventApple(this), this);
-        pm.registerEvents(new DeathListenerApple(this), this);
-        pm.registerEvents(new InteractEventTptroll(), this);
-        pm.registerEvents(new ProjectileHitListener(), this);
-        pm.registerEvents(new JoinListenerUpdate(this), this);
-        pm.registerEvents(new HerobrineListener(this), this);
-        pm.registerEvents(new HerobrineMoveListener(this), this);
-        pm.registerEvents(new QuitListenerRestart(this), this);
-        pm.registerEvents(new DeathListenerHurt(this), this);
-        pm.registerEvents(new DeathListenerBug(this), this);
-        pm.registerEvents(new DeathListenerVoid(this), this);
-        pm.registerEvents(new MineListener(this), this);
-        pm.registerEvents(new InteractBlockShooterListener(this), this);
-        pm.registerEvents(new EntityDamageByBlockShooterListener(), this);
-        pm.registerEvents(new DeathRemoveSpecialListener(), this);
-        pm.registerEvents(new GuiListener(this), this);
-        pm.registerEvents(new JoinListenerWhenCrashed(this), this);
-        pm.registerEvents(new DeathListenerTrample(this), this);
-        pm.registerEvents(new PlayerChatMuteListener(this), this);
-        pm.registerEvents(new TrollInvListener(this), this);
-        pm.registerEvents(new CreeperExplodeListener(this), this);
-        pm.registerEvents(new SpartaDeathListener(this), this);
-        pm.registerEvents(new DeathListenerSky(this), this);
-        pm.registerEvents(new BowGuiListener(this), this);
-        pm.registerEvents(new ProjectileBowsHitListener(this), this);
-        pm.registerEvents(new CreeperDamageByCreeperListener(this), this);
-        pm.registerEvents(new DenyPickupListener(this), this);
-        pm.registerEvents(new ChatListener(this), this);
-        pm.registerEvents(new DeathListenerAnvil(), this);
-        pm.registerEvents(new PullBowListener(this), this);
-        pm.registerEvents(new StatisticsGuiListener(this), this);
-        pm.registerEvents(new AnvilBlockLandListener(), this);
 
     }
 
@@ -607,7 +510,7 @@ public class TrollBoss extends JavaPlugin {
 
     public void setHerobrine(Player p) {
 
-        herobrine.add(p.getUniqueId());
+        TrollManager.activate(p.getUniqueId(), TrollType.HEROBRINE);
 
         Bukkit.getOnlinePlayers().forEach(all -> all.hidePlayer(this, p));
 
@@ -615,7 +518,7 @@ public class TrollBoss extends JavaPlugin {
 
     public void unsetHerobrine(Player p) {
 
-        herobrine.remove(p.getUniqueId());
+        TrollManager.deactivate(p.getUniqueId(), TrollType.HEROBRINE);
 
         Bukkit.getOnlinePlayers().forEach(all -> all.showPlayer(this, p));
     }
@@ -647,74 +550,13 @@ public class TrollBoss extends JavaPlugin {
                     .collect(Collectors.toList());
 
             for (Player all : playersToKick) {
-                TrollBoss.this.res.add(all.getUniqueId());
+                TrollManager.activate(all.getUniqueId(), TrollType.FAKERESTART);
                 all.kickPlayer("§cServer restarting...");
             }
 
-            TrollBoss.this.res.clear();
+            TrollManager.clear(TrollType.RANDOMTP);
 
         }, 30L);
-
-    }
-
-    private void addRandomTrolls() {
-
-        randomTrolls.put(1, "badapple");
-        randomTrolls.put(2, "bolt");
-        randomTrolls.put(3, "boom");
-        randomTrolls.put(4, "burn");
-        randomTrolls.put(5, "bury");
-
-        randomTrolls.put(6, "crash");
-        randomTrolls.put(7, "denymove");
-        randomTrolls.put(8, "fakeop");
-        randomTrolls.put(9, "fakedeop");
-        randomTrolls.put(10, "fakerestart");
-
-        randomTrolls.put(11, "freefall");
-        randomTrolls.put(12, "freeze");
-        randomTrolls.put(13, "gokill");
-        randomTrolls.put(14, "herobrine");
-        randomTrolls.put(15, "hurt");
-
-        randomTrolls.put(16, "infect");
-        randomTrolls.put(17, "launch");
-        randomTrolls.put(18, "nomine");
-        randomTrolls.put(19, "potatotroll");
-        randomTrolls.put(20, "pumpkinhead");
-
-        randomTrolls.put(21, "push");
-        randomTrolls.put(22, "randomtp");
-        randomTrolls.put(23, "spam");
-        randomTrolls.put(24, "starve");
-        randomTrolls.put(25, "trap");
-
-        randomTrolls.put(26, "trollkick");
-        randomTrolls.put(27, "turn");
-        randomTrolls.put(28, "void");
-        randomTrolls.put(29, "webtrap");
-        randomTrolls.put(30, "spank");
-
-        randomTrolls.put(31, "trample");
-        randomTrolls.put(32, "stfu");
-        randomTrolls.put(33, "popup");
-        randomTrolls.put(34, "sky");
-        randomTrolls.put(35, "abduct");
-
-        randomTrolls.put(36, "popular");
-        randomTrolls.put(37, "creeper");
-        randomTrolls.put(38, "sparta");
-        randomTrolls.put(39, "drug");
-        randomTrolls.put(40, "squidrain");
-
-        randomTrolls.put(41, "dropinv");
-        randomTrolls.put(42, "anvil");
-        randomTrolls.put(43, "invtext");
-        randomTrolls.put(44, "runforrest");
-
-        randomTrolls.put(45, "border");
-        randomTrolls.put(46, "noob");
-        randomTrolls.put(47, "shlong");
 
     }
 
@@ -1735,16 +1577,6 @@ public class TrollBoss extends JavaPlugin {
 
     }
 
-    public void removeFromRunIt(Player p) {
-
-        if (this.runIt.contains(p.getUniqueId())) {
-
-            Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> TrollBoss.this.runIt.remove(p.getUniqueId()), 80L);
-
-        }
-
-    }
-
     private void addInventoryTextItem(Player p, int inventorySlot, String text, int amount) {
 
         final Random x = new Random();
@@ -1890,7 +1722,6 @@ public class TrollBoss extends JavaPlugin {
                     p.sendMessage("§7[§4INFO§7] §cAll you had to do was to damn move CJ!");
 
                     TrollBoss.this.rf.replace(p.getName(), false);
-                    TrollBoss.this.deadMessage.add(p.getUniqueId());
                     TrollBoss.this.cancelTask(tasks2, p);
 
                     final String trollername = TrollBoss.this.rfmsg.get(p.getName());
@@ -2398,7 +2229,7 @@ public class TrollBoss extends JavaPlugin {
             p.getLocation().getWorld().getBlockAt(glassloc.get(0)).setType(Material.AIR);
             glassloc.clear();
             canNoob = true;
-            moveWhileNoobed.remove(p.getUniqueId());
+            TrollManager.deactivate(p.getUniqueId(), TrollType.NOOB);
 
         }, 280L);
 
@@ -3012,8 +2843,7 @@ public class TrollBoss extends JavaPlugin {
     public void teleportBackFromShlong(Player p) {
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
-
-            nomine.remove(p.getUniqueId());
+            TrollManager.deactivate(p.getUniqueId(), TrollType.NOMINE);
             p.teleport(oldShlongLocation.get(p.getName()));
             removeShlong(p.getLocation());
             oldShlongLocation.remove(p.getName());

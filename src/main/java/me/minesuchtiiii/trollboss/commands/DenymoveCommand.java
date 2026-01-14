@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -74,7 +76,7 @@ public class DenymoveCommand implements CommandExecutor {
             return;
         }
 
-        if (plugin.denyMove.contains(target.getUniqueId())) {
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.DENYMOVE)) {
             sender.sendMessage(StringManager.PREFIX + "§cCan't do this right now!");
             return;
         }
@@ -85,8 +87,10 @@ public class DenymoveCommand implements CommandExecutor {
     }
 
     private void addDenymove(Player target, int delayInSeconds) {
-        plugin.denyMove.add(target.getUniqueId());
-        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.denyMove.remove(target.getUniqueId()), delayInSeconds * 20L);
+        TrollManager.activate(target.getUniqueId(), TrollType.DENYMOVE);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            TrollManager.deactivate(target.getUniqueId(), TrollType.DENYMOVE);
+        }, delayInSeconds * 20L);
     }
 
     private String formatMinutes(int seconds) {

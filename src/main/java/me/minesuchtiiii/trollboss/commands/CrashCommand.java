@@ -1,7 +1,11 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,7 +14,8 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class CrashCommand implements CommandExecutor {
-    private static final String KICK_MESSAGE = "§cInternal exception: java.net.SocketException: Connection reset. Restart your game.";
+    private static final String MESSAGE = "§cInternal exception: java.net.SocketException: Connection reset. Restart your game.";
+    private static final Component KICK_MESSAGE = MiniMessage.miniMessage().deserialize(MESSAGE);
     private final TrollBoss plugin;
 
     public CrashCommand(TrollBoss plugin) {
@@ -83,8 +88,10 @@ public class CrashCommand implements CommandExecutor {
     }
 
     private void crashPlayer(Player target) {
-        plugin.crashed.add(target.getUniqueId());
-        target.kickPlayer(KICK_MESSAGE);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.crashed.remove(target.getUniqueId()), 15 * 20L);
+        TrollManager.activate(target.getUniqueId(), TrollType.CRASH);
+        target.kick(KICK_MESSAGE);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                TrollManager.activate(target.getUniqueId(), TrollType.CRASH);
+        }, 15 * 20L);
     }
 }

@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -72,7 +74,7 @@ public class NoobCommand implements CommandExecutor {
         sender.sendMessage(StringManager.PREFIX + "§eOfficially noobing §7" + target.getName() + "§e!");
         plugin.addTroll();
         plugin.addStats("Noob", sender);
-        plugin.moveWhileNoobed.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.NOOB);
         plugin.canNoob = false;
         plugin.beforeNoob.put(target.getName(), target.getLocation());
         plugin.noobIt(target);

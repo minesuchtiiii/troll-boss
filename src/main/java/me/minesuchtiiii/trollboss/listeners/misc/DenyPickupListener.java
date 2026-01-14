@@ -1,34 +1,20 @@
 package me.minesuchtiiii.trollboss.listeners.misc;
 
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 
-import me.minesuchtiiii.trollboss.TrollBoss;
-
-@SuppressWarnings("deprecation")
 public class DenyPickupListener implements Listener {
 
-	private final TrollBoss plugin;
-
-	public DenyPickupListener(TrollBoss plugin) {
-
-		this.plugin = plugin;
-
-	}
-
 	@EventHandler
-	public void onPickupWhenTrolled(PlayerPickupItemEvent e) {
+	public void onPickupWhenTrolled(EntityPickupItemEvent e) {
+        if (!(e.getEntity() instanceof Player player)) return;
+        if (!TrollManager.isActive(player.getUniqueId(), TrollType.DROPINV)) return;
 
-		final Player p = e.getPlayer();
-
-		if (this.plugin.denyPickup.contains(p.getUniqueId())) {
-
-			e.setCancelled(true);
-
-		}
-
+        e.setCancelled(true);
 	}
 
 }

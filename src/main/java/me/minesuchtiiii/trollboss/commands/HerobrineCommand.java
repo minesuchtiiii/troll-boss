@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -50,7 +52,7 @@ public class HerobrineCommand implements CommandExecutor {
     }
 
     private void toggleHerobrine(Player executor, Player target, String successMessage, String removeMessage) {
-        if (!plugin.herobrine.contains(target.getUniqueId())) {
+        if (!TrollManager.isActive(target.getUniqueId(), TrollType.HEROBRINE)) {
             plugin.setHerobrine(target);
             executor.sendMessage(StringManager.PREFIX + successMessage);
             target.sendMessage(SUCCESS_HEROBRINE);

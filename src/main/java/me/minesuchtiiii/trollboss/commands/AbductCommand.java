@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import me.minesuchtiiii.trollboss.utils.Ufo;
 import org.bukkit.*;
@@ -62,7 +64,7 @@ public class AbductCommand implements CommandExecutor {
             return true;
         }
 
-        if (plugin.playersBeingAbducted.contains(target.getUniqueId())) {
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.ABDUCT)) {
             player.sendMessage(StringManager.PREFIX + "§cCan't do this right now!");
             return true;
         }
@@ -72,12 +74,12 @@ public class AbductCommand implements CommandExecutor {
     }
 
     private void performAbduction(Player player, Player target) {
-        plugin.nomine.add(target.getUniqueId());
-        plugin.denyMove.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.NOMINE);
+        TrollManager.activate(target.getUniqueId(), TrollType.DENYMOVE);
 
         final Location location = target.getLocation();
         Ufo ufo = new Ufo(target, plugin);
-        plugin.playersBeingAbducted.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.ABDUCT);
         plugin.abductedCachedLocations.put(target.getUniqueId(), location);
 
         plugin.addTroll();
@@ -104,7 +106,7 @@ public class AbductCommand implements CommandExecutor {
                 Bukkit.getScheduler().cancelTask(task);
                 target.clearActivePotionEffects();
                 target.teleport(target.getLocation().add(0, 7.5, 0));
-                plugin.denyMove.remove(target.getUniqueId());
+                TrollManager.deactivate(target.getUniqueId(), TrollType.DENYMOVE);
                 Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     target.setHealth(20.0);
                     ufo.teleportBackFromUfo(target);

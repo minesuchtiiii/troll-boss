@@ -1,5 +1,7 @@
 package me.minesuchtiiii.trollboss.listeners.trollherobrine;
 
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.entity.Player;
@@ -21,7 +23,7 @@ public class HerobrineMoveListener implements Listener {
 	public void onMove(PlayerMoveEvent e) {
 		final Player p = e.getPlayer();
 
-		if (this.plugin.herobrine.contains(p.getUniqueId())) {
+		if (TrollManager.isActive(p.getUniqueId(), TrollType.HEROBRINE)) {
 
 			Bukkit.getOnlinePlayers().forEach(all -> all.playEffect(p.getLocation(), Effect.MOBSPAWNER_FLAMES, 0));
 		}

@@ -1,7 +1,9 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
 import me.minesuchtiiii.trollboss.items.keys.AnvilKey;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -11,7 +13,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
-import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("deprecation")
@@ -66,11 +67,7 @@ public class AnvilCommand implements CommandExecutor {
             player.sendMessage(CANNOT_EXECUTE_NOW);
             return;
         }
-        if (plugin.runIt.contains(player.getUniqueId())) {
-            player.sendMessage(CANNOT_EXECUTE_NOW);
-            return;
-        }
-        if (this.plugin.canAnvil.contains(player.getUniqueId())) {
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.ANVIL)) {
             player.sendMessage(CANNOT_EXECUTE_NOW);
             return;
         }
@@ -80,8 +77,7 @@ public class AnvilCommand implements CommandExecutor {
     }
 
     private void dropAnvilOnTarget(Player player, Player target) {
-        plugin.canAnvil.add(player.getUniqueId());
-        plugin.runIt.add(player.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.ANVIL);
 
         player.sendMessage(StringManager.PREFIX + "§eDropping an anvil on §7" + target.getName() + "§e!");
 
@@ -94,7 +90,9 @@ public class AnvilCommand implements CommandExecutor {
 
         this.plugin.addTroll();
         this.plugin.addStats("Anvil", player);
-        this.plugin.removeFromRunIt(player);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TrollBoss.getInstance(), () -> {
+            TrollManager.deactivate(target.getUniqueId(), TrollType.ANVIL);
+        }, 80L);
     }
 
 }

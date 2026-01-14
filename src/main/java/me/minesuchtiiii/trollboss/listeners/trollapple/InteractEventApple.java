@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.listeners.trollapple;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -34,47 +36,31 @@ public class InteractEventApple implements Listener {
         apple.setItemMeta(meta);
 
         if (e.getItem().equals(apple)) {
-            if (!(p.isOp())) {
-                if (!(p.hasPermission("troll.badapple.bypass"))) {
-
-                    plugin.dead.add(p.getUniqueId());
-                    p.sendMessage("§cOh no! Looks like this was a bad apple, bye :(");
-
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> hurtPlayer(p), 60L);
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> hurtPlayer(p), 80L);
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> hurtPlayer(p), 100L);
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> hurtPlayer(p), 120L);
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        p.setHealth(0.0D);
-                        InteractEventApple.this.plugin.dead.remove(p.getUniqueId());
-                    }, 140L);
-
-                }
-            } else {
-                if (plugin.getConfig().getBoolean("Troll-Operators")) {
-
-                    plugin.dead.add(p.getUniqueId());
-                    p.sendMessage("§cOh no! Looks like this was a bad apple, bye :(");
-
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> hurtPlayer(p), 60L);
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> hurtPlayer(p), 80L);
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> hurtPlayer(p), 100L);
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> hurtPlayer(p), 120L);
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        p.setHealth(0.0D);
-                        InteractEventApple.this.plugin.dead.remove(p.getUniqueId());
-                    }, 140L);
-
-                }
+            if (!(p.isOp() && p.hasPermission("troll.badapple.bypass"))) {
+                    executeBadAppleTroll(p);
+            } else if (plugin.getConfig().getBoolean("Troll-Operators")) {
+                    executeBadAppleTroll(p);
             }
         }
     }
 
-    private void hurtPlayer(Player player) {
+    private void executeBadAppleTroll(Player target) {
+        TrollManager.activate(target.getUniqueId(), TrollType.BADAPPLE);
+        target.sendMessage("§cOh no! Looks like this was a bad apple, bye :(");
 
-        player.playHurtAnimation(180);
-        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT, 1f, 1f);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> hurtPlayer(target), 60L);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> hurtPlayer(target), 80L);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> hurtPlayer(target), 100L);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> hurtPlayer(target), 120L);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            target.setHealth(0.0D);
+            TrollManager.deactivate(target.getUniqueId(), TrollType.BADAPPLE);
+        }, 140L);
+    }
 
+    private void hurtPlayer(Player target) {
+        target.playHurtAnimation(180);
+        target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_HURT, 1f, 1f);
     }
 
 }

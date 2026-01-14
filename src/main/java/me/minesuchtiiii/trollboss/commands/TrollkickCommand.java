@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -59,8 +61,8 @@ public class TrollkickCommand implements CommandExecutor {
 
         plugin.addTroll();
         plugin.addStats("Trollkick", player);
-        plugin.kicked.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.TROLLKICK);
         target.kickPlayer(KICK_MESSAGE);
-        plugin.kicked.remove(target.getUniqueId());
+        TrollManager.deactivate(target.getUniqueId(), TrollType.TROLLKICK);
     }
 }

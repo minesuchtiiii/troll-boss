@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -62,7 +64,7 @@ public class WebtrapCommand implements CommandExecutor {
             return true;
         }
 
-        if (plugin.webtrap.contains(target.getUniqueId())) {
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.WEBTRAP)) {
             player.sendMessage(StringManager.PREFIX + "§cCan't do this right now!");
             return true;
         }
@@ -87,7 +89,7 @@ public class WebtrapCommand implements CommandExecutor {
     private void trapPlayer(Player target, int time, Player executor) {
         plugin.addTroll();
         plugin.addStats("Webtrap", executor);
-        plugin.webtrap.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.WEBTRAP);
 
         // Web-Positionen zuweisen
         Location[] webLocations = calculateWebLocations(target.getLocation());
@@ -122,7 +124,7 @@ public class WebtrapCommand implements CommandExecutor {
     }
 
     private void removeWebtrap(Player target) {
-        plugin.webtrap.remove(target.getUniqueId());
+        TrollManager.deactivate(target.getUniqueId(), TrollType.WEBTRAP);
         for (int i = 1; i <= plugin.block.size(); i++) {
             Location block = plugin.block.get(i);
             block.getBlock().setType(Material.AIR);

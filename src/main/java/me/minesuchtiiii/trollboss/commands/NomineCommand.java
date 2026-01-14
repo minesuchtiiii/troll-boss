@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -87,7 +89,7 @@ public class NomineCommand implements CommandExecutor {
             player.sendMessage(StringManager.BYPASS);
             return false;
         }
-        if (plugin.nomine.contains(target.getUniqueId())) {
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.NOMINE)) {
             player.sendMessage(StringManager.PREFIX + CANNOT_DO_NOW);
             return false;
         }
@@ -101,12 +103,12 @@ public class NomineCommand implements CommandExecutor {
 
         plugin.addTroll();
         plugin.addStats("Nomine", player);
-        plugin.nomine.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.NOMINE);
 
         player.sendMessage(StringManager.PREFIX + "§7" + target.getName() + MINING_BLOCKED_MESSAGE + time
                 + " §eseconds! §c(~" + formattedTime + " minutes)");
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () ->
-                plugin.nomine.remove(target.getUniqueId()), time * 20L);
+                TrollManager.deactivate(target.getUniqueId(), TrollType.NOMINE), time * 20L);
     }
 }

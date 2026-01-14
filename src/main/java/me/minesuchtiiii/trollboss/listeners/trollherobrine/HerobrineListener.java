@@ -1,5 +1,7 @@
 package me.minesuchtiiii.trollboss.listeners.trollherobrine;
 
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,7 +20,7 @@ public class HerobrineListener implements Listener {
     public void onQuit(PlayerQuitEvent e) {
         final Player p = e.getPlayer();
 
-        if (this.plugin.herobrine.contains(p.getUniqueId())) {
+        if (TrollManager.isActive(p.getUniqueId(), TrollType.HEROBRINE)) {
             this.plugin.unsetHerobrine(p);
 
         }

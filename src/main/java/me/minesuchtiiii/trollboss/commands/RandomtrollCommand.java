@@ -1,6 +1,7 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -55,9 +56,9 @@ public class RandomtrollCommand implements CommandExecutor {
         plugin.addTroll();
         plugin.addStats("Randomtroll", player);
 
-        int randomTroll = plugin.createRandom(1, trollCommands.size());
+        int randomTroll = plugin.createRandom(0, trollCommands.size());
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            String trollName = plugin.randomTrolls.get(randomTroll);
+            String trollName = TrollType.values()[randomTroll - 1].name().toLowerCase(); // TODO: cleanup
             player.sendMessage(PREFIX + "§eRandomly picked troll: §7" + trollName + "§e!");
             Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> executeTrollCommand(player, target, randomTroll), 10L);
         }, 30L);

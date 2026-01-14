@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -57,7 +59,7 @@ public class StfuCommand implements CommandExecutor {
 
     private void handlePlayer(Player executor, Player target) {
 
-        if (plugin.muted.contains(target.getUniqueId())) {
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.STFU)) {
             unmutePlayer(executor, target);
         } else {
             mutePlayer(executor, target);
@@ -68,11 +70,11 @@ public class StfuCommand implements CommandExecutor {
 
     private void mutePlayer(Player executor, Player target) {
         executor.sendMessage(StringManager.PREFIX + "§eYou muted §7" + target.getName() + "§e!");
-        plugin.muted.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.STFU);
     }
 
     private void unmutePlayer(Player executor, Player target) {
         executor.sendMessage(StringManager.PREFIX + "§eYou unmuted §7" + target.getName() + "§e!");
-        plugin.muted.remove(target.getUniqueId());
+        TrollManager.deactivate(target.getUniqueId(), TrollType.STFU);
     }
 }

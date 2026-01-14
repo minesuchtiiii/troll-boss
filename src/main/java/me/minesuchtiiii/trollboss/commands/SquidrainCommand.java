@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -99,7 +101,7 @@ public class SquidrainCommand implements CommandExecutor {
             return false;
         }
 
-        if (plugin.squidRaining.contains(target.getUniqueId())) {
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.SQUIDRAIN)) {
             executor.sendMessage(StringManager.PREFIX + "§cCan't do this right now!");
             return false;
         }
@@ -108,7 +110,7 @@ public class SquidrainCommand implements CommandExecutor {
     }
 
     private void startSquidRain(Player executor, Player target, int amount) {
-        plugin.squidRaining.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.SQUIDRAIN);
         plugin.addTroll();
         plugin.addStats("Squidrain", executor);
 
@@ -120,7 +122,7 @@ public class SquidrainCommand implements CommandExecutor {
                 spawnSquidAbovePlayer(target);
             }
             if (spawnRounds == amount) {
-                plugin.squidRaining.remove(target.getUniqueId());
+                TrollManager.deactivate(target.getUniqueId(), TrollType.SQUIDRAIN);
                 Bukkit.getScheduler().cancelTask(scheduledTaskId);
                 spawnRounds = 0;
             }

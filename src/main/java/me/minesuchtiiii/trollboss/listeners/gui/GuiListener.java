@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.listeners.gui;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -85,7 +87,7 @@ public class GuiListener implements Listener {
 
                 // Special Logic: Garbage (Toggle)
                 case WRITABLE_BOOK -> {
-                    String state = this.plugin.garbageTroll.contains(targetUUID) ? "off" : "on";
+                    String state = TrollManager.isActive(targetUUID, TrollType.GARBAGE) ? "off" : "on";
                     commandToExecute = "garbage " + targetName + " " + state;
                 }
 

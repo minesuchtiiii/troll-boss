@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -72,7 +74,7 @@ public class ShlongCommand implements CommandExecutor {
         Location targetLocation = target.getLocation();
         plugin.oldShlongLocation.put(target.getName(), targetLocation);
         plugin.isShlonged = true;
-        plugin.nomine.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.NOMINE);
         plugin.addTroll();
         plugin.addStats("Shlong", player);
         plugin.buildShlong(targetLocation);

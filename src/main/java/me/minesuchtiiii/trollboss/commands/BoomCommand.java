@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -47,7 +49,7 @@ public class BoomCommand implements CommandExecutor {
     }
 
     private void handleSelfExplosion(Player player) {
-        if (plugin.booming.contains(player.getUniqueId())) {
+        if (TrollManager.isActive(player.getUniqueId(), TrollType.BOOM)) {
             player.sendMessage(StringManager.PREFIX + "§cYou can't do this right now!");
             return;
         }
@@ -64,7 +66,7 @@ public class BoomCommand implements CommandExecutor {
             player.sendMessage(StringManager.BYPASS);
             return;
         }
-        if (plugin.booming.contains(target.getUniqueId())) {
+        if (TrollManager.isActive(player.getUniqueId(), TrollType.BOOM)) {
             player.sendMessage(StringManager.PREFIX + "§cCan't do this right now!");
             return;
         }
@@ -82,7 +84,7 @@ public class BoomCommand implements CommandExecutor {
     }
 
     private boolean canTargetBeExploded(Player target) {
-        if (plugin.booming.contains(target.getUniqueId())) return false;
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.BOOM)) return false;
         return plugin.canBeTrolled(target);
     }
 
@@ -92,9 +94,9 @@ public class BoomCommand implements CommandExecutor {
                 : StringManager.PREFIX + "§7" + target.getName() + " §eis going to explode!";
         initiator.sendMessage(message);
 
-        plugin.booming.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.BOOM);
         plugin.addTroll();
-        plugin.addStats("Boom", initiator);
+        plugin.addStats("Boom", initiator); // Will be refactored later, since it's in capital case and not UPPER
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             target.getLocation().getWorld().createExplosion(
@@ -105,7 +107,7 @@ public class BoomCommand implements CommandExecutor {
                     false,
                     false
             );
-            plugin.booming.remove(target.getUniqueId());
+            TrollManager.deactivate(target.getUniqueId(), TrollType.BOOM);
         }, EXPLOSION_DELAY);
     }
 }

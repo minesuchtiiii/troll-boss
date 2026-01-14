@@ -1,6 +1,7 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.items.keys.AnvilKey;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -87,15 +88,13 @@ public class AnvilCommand implements CommandExecutor {
         Location targetLocation = target.getLocation();
         Location spawnLocation = targetLocation.clone().add(0, 20, 0);
         FallingBlock fallingBlock = target.getWorld().spawnFallingBlock(spawnLocation, Material.DAMAGED_ANVIL.createBlockData());
-        fallingBlock.getPersistentDataContainer().set(plugin.getKey(), PersistentDataType.STRING, "falling-anvil");
+        AnvilKey.setAnvilTroll(fallingBlock);
         fallingBlock.setDamagePerBlock(20f);
         fallingBlock.setMaxDamage(100);
 
         this.plugin.addTroll();
         this.plugin.addStats("Anvil", player);
         this.plugin.removeFromRunIt(player);
-        this.plugin.anvilDeath.add(target.getUniqueId());
-
     }
 
 }

@@ -3,7 +3,6 @@ package me.minesuchtiiii.trollboss;
 import me.minesuchtiiii.trollboss.commands.*;
 import me.minesuchtiiii.trollboss.listeners.anvil.AnvilBlockLandListener;
 import me.minesuchtiiii.trollboss.listeners.anvil.DeathListenerAnvil;
-import me.minesuchtiiii.trollboss.listeners.anvil.RespawnListenerAnvil;
 import me.minesuchtiiii.trollboss.listeners.trollapple.DeathListenerApple;
 import me.minesuchtiiii.trollboss.listeners.chat.ChatListener;
 import me.minesuchtiiii.trollboss.listeners.chat.PlayerChatMuteListener;
@@ -64,7 +63,6 @@ public class TrollBoss extends JavaPlugin {
     private static final int METRICS_ID = 15941;
     public final Map<UUID, List<Location>> ufoBlockLocations = new HashMap<>();
     public final int max = 6;
-    private final NamespacedKey key = new NamespacedKey(this, "trollboss");
     private final ArrayList<Entity> cows = new ArrayList<>();
     private final ArrayList<Location> glassloc = new ArrayList<>();
     private final ArrayList<String> spams = new ArrayList<>();
@@ -80,7 +78,6 @@ public class TrollBoss extends JavaPlugin {
     private final HashMap<UUID, Inventory> invstores = new HashMap<>();
     public ArrayList<Integer> potatoTroll = new ArrayList<>();
     public ArrayList<String> color = new ArrayList<>();
-    public ArrayList<UUID> anvilDeath = new ArrayList<>();
     public ArrayList<UUID> booming = new ArrayList<>();
     public ArrayList<UUID> bury = new ArrayList<>();
     public ArrayList<UUID> canAnvil = new ArrayList<>();
@@ -267,11 +264,10 @@ public class TrollBoss extends JavaPlugin {
         pm.registerEvents(new CreeperDamageByCreeperListener(this), this);
         pm.registerEvents(new DenyPickupListener(this), this);
         pm.registerEvents(new ChatListener(this), this);
-        pm.registerEvents(new DeathListenerAnvil(this), this);
-        pm.registerEvents(new RespawnListenerAnvil(this), this);
+        pm.registerEvents(new DeathListenerAnvil(), this);
         pm.registerEvents(new PullBowListener(this), this);
         pm.registerEvents(new StatisticsGuiListener(this), this);
-        pm.registerEvents(new AnvilBlockLandListener(this), this);
+        pm.registerEvents(new AnvilBlockLandListener(), this);
 
     }
 
@@ -3161,10 +3157,6 @@ public class TrollBoss extends JavaPlugin {
     public String getVersion() {
 
         return this.version;
-    }
-
-    public NamespacedKey getKey() {
-        return this.key;
     }
 
 }

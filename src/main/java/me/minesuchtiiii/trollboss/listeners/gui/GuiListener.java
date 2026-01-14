@@ -1,7 +1,9 @@
 package me.minesuchtiiii.trollboss.listeners.gui;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.GuiManager;
 import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.manager.TutorialManager;
 import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
@@ -153,7 +155,7 @@ public class GuiListener implements Listener {
                     if (item.getAmount() == 1) executeTroll(p, "special 1");
                     else if (item.getAmount() == 2) executeTroll(p, "special 2");
                 }
-                case IRON_DOOR -> this.plugin.openGui(p);
+                case IRON_DOOR -> GuiManager.openGui(p);
             }
         }
     }
@@ -171,7 +173,7 @@ public class GuiListener implements Listener {
     }
 
     private boolean checkTutorial(Player p) {
-        if (this.plugin.usable.contains(p.getUniqueId())) {
+        if (TutorialManager.isUsable(p)) {
             p.sendMessage(StringManager.PREFIX + "§cNot available in the tutorial!");
             return true;
         }

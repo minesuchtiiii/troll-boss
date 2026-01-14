@@ -7,6 +7,7 @@ import me.minesuchtiiii.trollboss.tabcomplete.Tc_Troll;
 import me.minesuchtiiii.trollboss.tabcomplete.Tc_TrollOp;
 import me.minesuchtiiii.trollboss.tabcomplete.Tc_Trolltutorial;
 import me.minesuchtiiii.trollboss.trolls.TrollType;
+import me.minesuchtiiii.trollboss.utils.GuiItem;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import me.minesuchtiiii.trollboss.utils.UpdateChecker;
 import org.bstats.bukkit.Metrics;
@@ -51,11 +52,6 @@ public class TrollBoss extends JavaPlugin {
     private final HashMap<UUID, Inventory> invstores = new HashMap<>();
     public ArrayList<Integer> potatoTroll = new ArrayList<>();
     public ArrayList<String> color = new ArrayList<>();
-
-    // More things
-    public ArrayList<UUID> tutorialPlayers = new ArrayList<>();
-    public ArrayList<UUID> usable = new ArrayList<>();
-
     public HashMap<Integer, Location> altblockloc = new HashMap<>();
     public HashMap<Integer, Location> block = new HashMap<>();
     public HashMap<Integer, Location> blockloc = new HashMap<>();
@@ -74,11 +70,7 @@ public class TrollBoss extends JavaPlugin {
     public HashMap<String, Location> oldShlongLocation = new HashMap<>();
     public HashMap<String, Location> skymap = new HashMap<>();
     public HashMap<String, String> rfmsg = new HashMap<>();
-    public HashMap<UUID, Boolean> canAccept = new HashMap<>();
-    public HashMap<UUID, Integer> secondsToAccept = new HashMap<>();
     public HashMap<UUID, Integer> spartaArrows = new HashMap<>();
-    public HashMap<UUID, Integer> taskID = new HashMap<>();
-    public HashMap<UUID, Integer> tutorialNum = new HashMap<>();
     public HashMap<UUID, Location> abductedCachedLocations = new HashMap<>();
     public HashMap<UUID, UUID> trolling = new HashMap<>();
     public HashSet<UUID> spammedPlayers = new HashSet<>();
@@ -98,7 +90,6 @@ public class TrollBoss extends JavaPlugin {
     public int trollBuffer = 0;
     private String version;
     private boolean update;
-    private int tutorialTask;
     private static TrollBoss INSTANCE;
 
     public static TrollBoss getInstance() {
@@ -256,7 +247,7 @@ public class TrollBoss extends JavaPlugin {
         getCommand("trollbows").setExecutor(new BowsCommand(this));
         getCommand("drug").setExecutor(new DrugCommand(this));
         getCommand("squidrain").setExecutor(new SquidrainCommand(this));
-        getCommand("trolltutorial").setExecutor(new TrolltutorialCommand(this));
+        getCommand("trolltutorial").setExecutor(new TrolltutorialCommand());
         getCommand("trolltutorial").setTabCompleter(new Tc_Trolltutorial(this));
         getCommand("dropinv").setExecutor(new DropinvCommand(this));
         getCommand("garbage").setExecutor(new GarbageCommand(this));
@@ -580,136 +571,6 @@ public class TrollBoss extends JavaPlugin {
         return r.nextInt((upper - lower) + 1) + lower;
     }
 
-    public ItemStack createGuiItem(int amount, Material mat, String displayName, String... lore) {
-
-        ItemStack itemStack = new ItemStack(mat, amount);
-        ItemMeta itemStackMeta = itemStack.getItemMeta();
-        ArrayList<String> metaLore = new ArrayList<>();
-        metaLore.add("");
-        metaLore.addAll(Arrays.asList(lore));
-        itemStackMeta.setLore(metaLore);
-        itemStackMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemStackMeta.setDisplayName(displayName);
-        itemStack.setItemMeta(itemStackMeta);
-
-        return itemStack;
-    }
-
-    public void openGui(Player p) {
-
-        final Inventory gui = Bukkit.createInventory(null, 54, "§cTroll-Gui");
-
-        final ItemStack close = createGuiItem(1, Material.EMERALD, "§bClose the gui", "§7Closes the Troll-Gui");
-        final ItemStack badapple = createGuiItem(1, Material.APPLE, "§eBadapple", "§7Give the player an", "§7apple. If he eats it he will die.");
-        final ItemStack bolt = createGuiItem(1, Material.FIRE_CHARGE, "§eBolt", "§7Strikes a lightning at", "§7the player's location.");
-        final ItemStack boom = createGuiItem(1, Material.TNT, "§eBoom", "§7Creates an explosion at", "§7the player's location.");
-        final ItemStack burn = createGuiItem(1, Material.LAVA_BUCKET, "§eBurn", "§7Sets the player on fire.");
-        final ItemStack bury = createGuiItem(1, Material.DIRT, "§eBury", "§7Will bury the player underground.");
-        final ItemStack crash = createGuiItem(1, Material.STRING, "§eCrash", "§7Kicks the player from", "§7the server with a fake crash message.");
-        final ItemStack denymove = createGuiItem(1, Material.LEATHER_BOOTS, "§eDenymove", "§7Won't let the player move.");
-        final ItemStack fakeop = createGuiItem(1, Material.DIAMOND, "§eFakeop", "§7Fake op's a player.");
-        final ItemStack fakedeop = createGuiItem(1, Material.GOLD_INGOT, "§eFakedeop", "§7Fake deop's a player.");
-        final ItemStack fakerestart = createGuiItem(1, Material.BLAZE_POWDER, "§eFakerestart", "§7Fake restarts the server.");
-        final ItemStack freefall = createGuiItem(1, Material.WHITE_WOOL, "§eFreefall", "§7Lets a player freefall", "§7from a certain height.");
-        final ItemStack freeze = createGuiItem(1, Material.ICE, "§eFreeze", "§7Freezes a player.");
-        final ItemStack gokill = createGuiItem(1, Material.SOUL_SAND, "§eGokill", "§7Kills a player after a certain period.");
-        final ItemStack hero = createGuiItem(1, Material.GLOWSTONE_DUST, "§eHerobrine", "§7Sets a player to Herobrine.");
-        final ItemStack hurt = createGuiItem(1, Material.REDSTONE, "§eHurt", "§7Hurts a player.");
-        final ItemStack infect = createGuiItem(1, Material.POTION, "§eInfect", "§7Infects a player.");
-        final ItemStack launch = createGuiItem(1, Material.FIREWORK_ROCKET, "§eLaunch", "§7Launchs a player.");
-        final ItemStack nomine = createGuiItem(1, Material.GRASS_BLOCK, "§eNomine", "§7Prevents a player from breaking blocks.");
-        final ItemStack potato = createGuiItem(1, Material.BAKED_POTATO, "§ePotatotroll", "§7Replaces every item in a player's", "§7inventory with a potato.");
-        final ItemStack pump = createGuiItem(1, Material.JACK_O_LANTERN, "§ePumpkinhead", "§7Sets the head of a player to a pumpkin.");
-        final ItemStack push = createGuiItem(1, Material.FEATHER, "§ePush", "§7Pushes a player.");
-        final ItemStack rnd = createGuiItem(1, Material.ENDER_PEARL, "§eRandomteleport", "§7Teleports a player randomly.");
-        final ItemStack spam = createGuiItem(1, Material.OAK_SIGN, "§eSpam", "§7Spams a player.");
-        final ItemStack special = createGuiItem(1, Material.CHEST, "§eSpecial", "§7To get the special.");
-        final ItemStack starve = createGuiItem(1, Material.COOKED_CHICKEN, "§eStarve", "§7Starves a player.");
-        final ItemStack tpt = createGuiItem(1, Material.FISHING_ROD, "§eTeleporttroll", "§7To get a special item, with which", "§7you can troll players.");
-        final ItemStack trap = createGuiItem(1, Material.BEDROCK, "§eTrap", "§7Traps a player.");
-        final ItemStack tkick = createGuiItem(1, Material.IRON_DOOR, "§eTrollkick", "§7To trollkick a player.");
-        final ItemStack turn = createGuiItem(1, Material.PAPER, "§eTurn", "§7Turns a player around.");
-        final ItemStack voidd = createGuiItem(1, Material.OBSIDIAN, "§eVoid", "§7Removes blocks under a player", "§7until he dies in the void.");
-        final ItemStack web = createGuiItem(1, Material.COBWEB, "§eWebtrap", "§7Traps a player in cobweb.");
-        final ItemStack spank = createGuiItem(1, Material.BONE, "§eSpank", "§7Spanks a player.");
-        final ItemStack trample = createGuiItem(1, Material.COW_SPAWN_EGG, "§eTrample", "§7Lets cows trample on a player.");
-        final ItemStack mute = createGuiItem(1, Material.LEVER, "§eStfu", "§7To mute a player.");
-        final ItemStack popup = createGuiItem(1, Material.BOOK, "§ePopup", "§7Opens a player's inventory.");
-        final ItemStack sky = createGuiItem(1, Material.GLASS, "§eSky", "§7Teleports a player to the sky.");
-        final ItemStack ab = createGuiItem(1, Material.CLOCK, "§eAbduct", "§7Lets aliens abduct the player.");
-        final ItemStack pop = createGuiItem(1, Material.EXPERIENCE_BOTTLE, "§ePopular", "§7Teleports all players to the player.");
-        final ItemStack crp = createGuiItem(1, Material.CREEPER_SPAWN_EGG, "§eCreeper", "§7Spawns creepers at the player's location.");
-        final ItemStack sp = createGuiItem(1, Material.ARROW, "§eSparta", "§7Shoots arrows at a player", "§7from different locations.");
-        final ItemStack drug = createGuiItem(1, Material.WHEAT, "§eDrug", "§7Drugs a player.");
-        final ItemStack rain = createGuiItem(1, Material.INK_SAC, "§eSquidrain", "§7Lets squids rain on a player.");
-        final ItemStack dropinv = createGuiItem(1, Material.DROPPER, "§eDropinv", "§7Lets a player drop all of his items.");
-        final ItemStack garbage = createGuiItem(1, Material.WRITABLE_BOOK, "§eGarbage", "§7To change a player's chat messages to garbage.");
-        final ItemStack anvil = createGuiItem(1, Material.ANVIL, "§eAnvil", "§7Drops an anvil on a player.");
-        final ItemStack invtext = createGuiItem(2, Material.PAPER, "§eInvtext", "§7Adds a text to a player's inventory with items.");
-        final ItemStack rnfrst = createGuiItem(1, Material.IRON_BOOTS, "§eRunforrest", "§7Keeps a player moving for a minute,", "§7otherwise it kills him.");
-        final ItemStack tbows = createGuiItem(1, Material.BOW, "§eTrollbows", "§7Choose between 4 different trollbows.");
-        final ItemStack border = createGuiItem(1, Material.DEAD_BUSH, "§eBorder", "§7Teleports a player to the world's border.");
-        final ItemStack noob = createGuiItem(1, Material.VINE, "§eNoob", "§7Noobs a player.");
-        final ItemStack shlong = createGuiItem(1, Material.PINK_TULIP, "§eShlong", "§7Shlongs a player 8=D.");
-
-        gui.setItem(0, badapple);
-        gui.setItem(1, bolt);
-        gui.setItem(2, boom);
-        gui.setItem(3, burn);
-        gui.setItem(4, bury);
-        gui.setItem(5, crash);
-        gui.setItem(6, denymove);
-        gui.setItem(7, fakeop);
-        gui.setItem(8, fakedeop);
-        gui.setItem(9, fakerestart);
-        gui.setItem(10, freefall);
-        gui.setItem(11, freeze);
-        gui.setItem(12, gokill);
-        gui.setItem(13, hero);
-        gui.setItem(14, hurt);
-        gui.setItem(15, infect);
-        gui.setItem(16, launch);
-        gui.setItem(17, nomine);
-        gui.setItem(18, potato);
-        gui.setItem(19, pump);
-        gui.setItem(20, push);
-        gui.setItem(21, rnd);
-        gui.setItem(22, spam);
-        gui.setItem(23, special);
-        gui.setItem(24, starve);
-        gui.setItem(25, tpt);
-        gui.setItem(26, trap);
-        gui.setItem(27, tkick);
-        gui.setItem(28, turn);
-        gui.setItem(29, voidd);
-        gui.setItem(30, web);
-        gui.setItem(31, spank);
-        gui.setItem(32, trample);
-        gui.setItem(33, mute);
-        gui.setItem(34, popup);
-        gui.setItem(35, sky);
-        gui.setItem(36, ab);
-        gui.setItem(37, pop);
-        gui.setItem(38, crp);
-        gui.setItem(39, sp);
-        gui.setItem(40, drug);
-        gui.setItem(41, rain);
-        gui.setItem(42, dropinv);
-        gui.setItem(43, garbage);
-        gui.setItem(44, anvil);
-        gui.setItem(45, invtext);
-        gui.setItem(46, rnfrst);
-        gui.setItem(47, tbows);
-        gui.setItem(48, border);
-        gui.setItem(49, noob);
-        gui.setItem(50, shlong);
-
-        gui.setItem(53, close);
-
-        p.openInventory(gui);
-
-    }
-
     public void closeGui(Player p) {
 
         p.getOpenInventory().close();
@@ -721,9 +582,9 @@ public class TrollBoss extends JavaPlugin {
 
         final Inventory inv = Bukkit.createInventory(null, 9, "§cChoose the special");
 
-        final ItemStack one = createGuiItem(1, Material.EMERALD, "§7#1 §eAk-47", "§7To get the AK-47.");
-        final ItemStack two = createGuiItem(2, Material.EMERALD, "§7#2 §eBlock Shooter", "§7To get the Block Shooter.");
-        final ItemStack back = createGuiItem(1, Material.IRON_DOOR, "§bReturn to the Troll-Gui", "§7To return to the Troll-Gui.");
+        final ItemStack one = GuiItem.createGuiItem(1, Material.EMERALD, "§7#1 §eAk-47", "§7To get the AK-47.");
+        final ItemStack two = GuiItem.createGuiItem(2, Material.EMERALD, "§7#2 §eBlock Shooter", "§7To get the Block Shooter.");
+        final ItemStack back = GuiItem.createGuiItem(1, Material.IRON_DOOR, "§bReturn to the Troll-Gui", "§7To return to the Troll-Gui.");
 
         final ItemStack none = new ItemStack(Material.GLASS_PANE, 1);
         final ItemMeta nonemeta = none.getItemMeta();
@@ -919,45 +780,6 @@ public class TrollBoss extends JavaPlugin {
             trollBuffer = 0;
 
         }
-
-    }
-
-    public void openTrollInv(Player viewer) {
-
-        List<Player> targets = Bukkit.getOnlinePlayers().stream()
-                .filter(p -> !p.getUniqueId().equals(viewer.getUniqueId()))
-                .collect(Collectors.toList());
-
-        if (targets.isEmpty()) {
-            viewer.sendMessage(StringManager.PREFIX + "§cThere are no players online that you could troll.");
-            return;
-        }
-
-        int slots = (targets.size() + 8) / 9 * 9;
-
-        if (slots > 54) {
-            slots = 54;
-        }
-
-        final Inventory inv = Bukkit.createInventory(null, slots, "§cTroll a player");
-
-        for (Player target : targets) {
-
-            if (inv.firstEmpty() == -1) break;
-
-            ItemStack head = new ItemStack(Material.PLAYER_HEAD);
-            SkullMeta meta = (SkullMeta) head.getItemMeta();
-
-            if (meta != null) {
-                meta.setOwningPlayer(target);
-                meta.setDisplayName("§e" + target.getName());
-                head.setItemMeta(meta);
-            }
-
-            inv.addItem(head);
-        }
-
-        viewer.openInventory(inv);
 
     }
 
@@ -1317,186 +1139,6 @@ public class TrollBoss extends JavaPlugin {
 
         statscfg.set("Troll.Bows." + bow, getBowStats(bow) + 1);
         saveStats();
-
-    }
-
-    public void startTrollTutorial(Player p) {
-
-        this.tutorialNum.put(p.getUniqueId(), 0);
-
-        tutorialTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-
-            tutorialNum.put(p.getUniqueId(), tutorialNum.get(p.getUniqueId()) + 1);
-
-            if (tutorialNum.get(p.getUniqueId()) == 1) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6In this tutorial you will learn everything you need to know about this plugin!");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 10) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6Let's start with the basic command of this plugin: §4/troll");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 15) {
-
-                p.sendMessage("");
-                p.sendMessage(
-                        StringManager.PREFIX + "§6When typing §4/troll §6an inventory opens, where you can see heads");
-                p.sendMessage(StringManager.PREFIX + "§6of players (if there are any online)");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 23) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6The inventory looks like this:");
-                this.usable.add(p.getUniqueId());
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 27) {
-
-                this.openTrollInv(p);
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 31) {
-
-                p.sendMessage("");
-                p.getOpenInventory().close();
-                this.usable.remove(p.getUniqueId());
-                p.sendMessage(StringManager.PREFIX + "§6You can choose a player by clicking on his head");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 36) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6After you clicked on his head another inventory will be opened");
-                p.sendMessage(StringManager.PREFIX + "§6The Troll-GUI!");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 43) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6The Troll-GUI looks like this:");
-                this.usable.add(p.getUniqueId());
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 47) {
-
-                this.openGui(p);
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 51) {
-
-                p.sendMessage("");
-                p.getOpenInventory().close();
-                this.usable.remove(p.getUniqueId());
-                p.sendMessage(StringManager.PREFIX + "§6In the Troll-GUI you can see a lot of different items");
-                p.sendMessage(StringManager.PREFIX + "§6Each item starts a different troll for the player you selected before");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 58) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6If you want to speed things up a bit you can use the command §4/troll [player]");
-                p.sendMessage(StringManager.PREFIX + "§6With this command the Troll-GUI opens immediately, the selected player is the");
-                p.sendMessage(StringManager.PREFIX + "§6argument after the command");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 69) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6If you want to speed up things even more you can just type the command");
-                p.sendMessage(StringManager.PREFIX + "§6To get a list of all commands of this plugin type §4/troll help [1-5]");
-                p.sendMessage(StringManager.PREFIX + "§6There are 6 help pages, so for example you can type §4/troll help 3");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 82) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6So how about bypassing trolls?");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 85) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6Users with the permission §4troll.bypass §6can bypass every troll");
-                p.sendMessage(StringManager.PREFIX + "§6They are just not trollable!");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 90) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6But wait... operators have all permission, this means they also have the bypass permission");
-                p.sendMessage(StringManager.PREFIX + "§6Does this mean that I cannot troll operators?");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 98) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6The answer is: §4You can troll operators!");
-                p.sendMessage(StringManager.PREFIX + "§6With the command §4/trollop [true | false] §6you can decide");
-                p.sendMessage(StringManager.PREFIX + "§6whether operators can be trolled or not, isn't that great? :)");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 110) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6You might ask yourself \"How server friendly is this plugin?\"");
-                p.sendMessage(StringManager.PREFIX + "§6Do the trolls destroy the world and some stuff I built?");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 118) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6The answer is: §4No!");
-                p.sendMessage(StringManager.PREFIX + "§6The plugin is very server friendly, it doesn't destroy any");
-                p.sendMessage(StringManager.PREFIX + "§6blocks at all, and if in a command blocks get placed they will");
-                p.sendMessage(StringManager.PREFIX + "§6be removed again and the old blocks at the locations will be reset!");
-                p.sendMessage(StringManager.PREFIX + "§6So don't worry about this! :)");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 135) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6Alright, but is there a way to see how many times I used a certain troll?");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 139) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6The answer is: §4Yes!");
-                p.sendMessage(StringManager.PREFIX + "§6With the command §4/troll statistics §6you get statistics about every");
-                p.sendMessage(StringManager.PREFIX + "§6single troll command you used!");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 147) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6Is there anything else I should know?");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 150) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6Yes! There are some special commands, like");
-                p.sendMessage(StringManager.PREFIX + "§4/special [1-2] §6or §4/trollbows");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 154) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6What this commands do? Well, just try them out! :)");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 158) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6That's it for now, this tutorial might get edited in the future");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 165) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§4Important! §6If you find any bugs please report them on the site");
-                p.sendMessage(StringManager.PREFIX + "§6you downloaded this plugin, this helps to improve it!");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 170) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6Finishing tutorial...");
-
-            } else if (tutorialNum.get(p.getUniqueId()) == 172) {
-
-                p.sendMessage("");
-                p.sendMessage(StringManager.PREFIX + "§6Tutorial finished!");
-                p.sendMessage("");
-                tutorialNum.remove(p.getUniqueId());
-                this.usable.remove(p.getUniqueId());
-                Bukkit.getScheduler().cancelTask(tutorialTask);
-
-            }
-
-        }, 50L, 20L);
-
-        taskID.put(p.getUniqueId(), tutorialTask);
 
     }
 
@@ -2850,22 +2492,6 @@ public class TrollBoss extends JavaPlugin {
             isShlonged = false;
 
         }, 20 * 20L);
-
-    }
-
-    public void endTask(Player p) {
-
-        if (!taskID.containsKey(p.getUniqueId())) {
-            return;
-        }
-        final int tid = taskID.get(p.getUniqueId());
-        Bukkit.getScheduler().cancelTask(tid);
-        taskID.remove(p.getUniqueId());
-    }
-
-    public void checkIfIsInUsable(Player p) {
-
-        this.usable.remove(p.getUniqueId());
 
     }
 

@@ -1,6 +1,7 @@
 package me.minesuchtiiii.trollboss.listeners.gui;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TutorialManager;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,7 +26,7 @@ public class TrollInvListener implements Listener {
 
         if (e.getWhoClicked() instanceof final Player p) {
             if ("§cTroll a player".equals(e.getView().getTitle())) {
-                if (!(this.plugin.usable.contains(p.getUniqueId()))) {
+                if (!(TutorialManager.isUsable(p))) {
 
                     p.updateInventory();
 

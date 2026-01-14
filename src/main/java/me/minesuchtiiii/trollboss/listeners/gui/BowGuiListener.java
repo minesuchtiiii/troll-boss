@@ -1,6 +1,7 @@
 package me.minesuchtiiii.trollboss.listeners.gui;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.GuiManager;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -167,7 +168,7 @@ public class BowGuiListener implements Listener {
                     } else if (e.getCurrentItem().getType() == Material.IRON_DOOR) {
 
                         p.getOpenInventory().close();
-                        this.plugin.openGui(p);
+                        GuiManager.openGui(p);
 
                     } else if (e.getCurrentItem().getType() == Material.GLASS_PANE) {
 

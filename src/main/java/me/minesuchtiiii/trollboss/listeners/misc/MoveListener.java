@@ -16,7 +16,7 @@ public class MoveListener implements Listener {
 	public void onMove(PlayerMoveEvent e) {
 		final Player p = e.getPlayer();
 
-		if (isMovementRestricted(p.getUniqueId())) return;
+		if (!isMovementRestricted(p.getUniqueId())) return;
 
         Location from = e.getFrom();
         Location to = e.getTo();

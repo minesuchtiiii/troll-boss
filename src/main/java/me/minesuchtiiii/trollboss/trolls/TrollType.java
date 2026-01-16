@@ -49,5 +49,5 @@ public enum TrollType {
     RUNFORREST,
     BORDER,
     NOOB,
-    SHLONG
+    SCHLONG
 }

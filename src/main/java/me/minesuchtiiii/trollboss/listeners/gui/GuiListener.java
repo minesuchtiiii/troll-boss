@@ -136,7 +136,7 @@ public class GuiListener implements Listener {
                 case IRON_BOOTS -> commandToExecute = "runforrest " + targetName + " 60";
                 case DEAD_BUSH -> commandToExecute = "border " + targetName;
                 case VINE -> commandToExecute = "noob " + targetName;
-                case PINK_TULIP -> commandToExecute = "shlong " + targetName;
+                case PINK_TULIP -> commandToExecute = "schlong " + targetName;
             }
 
             if (commandToExecute != null) {

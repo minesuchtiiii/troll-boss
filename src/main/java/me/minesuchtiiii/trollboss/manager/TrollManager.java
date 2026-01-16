@@ -6,6 +6,7 @@ import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TrollManager {
     private static final EnumMap<TrollType, Set<UUID>> activeTrolls;
@@ -16,7 +17,7 @@ public class TrollManager {
         activeTrolls = new EnumMap<>(TrollType.class);
 
         for (TrollType type : TrollType.values()) {
-            activeTrolls.put(type, new HashSet<>());
+            activeTrolls.put(type, ConcurrentHashMap.newKeySet());
         }
     }
 

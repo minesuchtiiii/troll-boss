@@ -68,7 +68,7 @@ public class GuiManager {
         final ItemStack tbows = GuiItem.createGuiItem(1, Material.BOW, "§eTrollbows", "§7Choose between 4 different trollbows.");
         final ItemStack border = GuiItem.createGuiItem(1, Material.DEAD_BUSH, "§eBorder", "§7Teleports a player to the world's border.");
         final ItemStack noob = GuiItem.createGuiItem(1, Material.VINE, "§eNoob", "§7Noobs a player.");
-        final ItemStack shlong = GuiItem.createGuiItem(1, Material.PINK_TULIP, "§eShlong", "§7Shlongs a player 8=D.");
+        final ItemStack schlong = GuiItem.createGuiItem(1, Material.PINK_TULIP, "§eSchlong", "§7Shclongs a player 8=D.");
 
         gui.setItem(0, badapple);
         gui.setItem(1, bolt);
@@ -120,7 +120,7 @@ public class GuiManager {
         gui.setItem(47, tbows);
         gui.setItem(48, border);
         gui.setItem(49, noob);
-        gui.setItem(50, shlong);
+        gui.setItem(50, schlong);
 
         gui.setItem(53, close);
 

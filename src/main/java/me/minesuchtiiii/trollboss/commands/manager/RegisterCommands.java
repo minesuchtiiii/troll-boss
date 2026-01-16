@@ -73,7 +73,7 @@ public class RegisterCommands {
         requireCommand("border").setExecutor(new BorderCommand(plugin));
         requireCommand("noob").setExecutor(new NoobCommand(plugin));
         requireCommand("randomtroll").setExecutor(new RandomtrollCommand(plugin));
-        requireCommand("shlong").setExecutor(new ShlongCommand(plugin));
+        requireCommand("schlong").setExecutor(new SchlongCommand(plugin));
 
     }
 

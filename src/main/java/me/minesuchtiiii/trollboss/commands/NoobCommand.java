@@ -2,6 +2,7 @@ package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.NoobManager;
 import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
@@ -57,7 +58,7 @@ public class NoobCommand implements CommandExecutor {
             return;
         }
 
-        if (!plugin.canNoob) {
+        if (!NoobManager.canNoob()) {
             sender.sendMessage(StringManager.PREFIX + "§cCan't do this right now!");
             return;
         }
@@ -67,17 +68,7 @@ public class NoobCommand implements CommandExecutor {
             return;
         }
 
-        executeNoobAction(sender, target);
-    }
-
-    private void executeNoobAction(Player sender, Player target) {
-        sender.sendMessage(StringManager.PREFIX + "§eOfficially noobing §7" + target.getName() + "§e!");
-        plugin.addTroll();
-        plugin.addStats("Noob", sender);
-        TrollManager.activate(target.getUniqueId(), TrollType.NOOB);
-        plugin.canNoob = false;
-        plugin.beforeNoob.put(target.getName(), target.getLocation());
-        plugin.noobIt(target);
+        new NoobManager(sender, target).executeNoobAction();
     }
 
 }

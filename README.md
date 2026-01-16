@@ -50,7 +50,7 @@ The primary command is `/troll`, which opens a GUI containing all available trol
 - `/herobrine <player>`: Transform into Herobrine.
 - `/fakerestart <time>`: Simulate a server restart.
 - `/burn`, `/freeze`, `/bolt`, `/boom`: Classic elemental trolls.
-- `/shlong <player>`: A "unique" visual troll.
+- `/schlong <player>`: A "unique" visual troll.
 
 ## 🔐 Permissions
 

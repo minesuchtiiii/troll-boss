@@ -88,55 +88,6 @@ public class TrollBoss extends JavaPlugin {
         return INSTANCE;
     }
 
-    private static ItemStack getHead(Player p) {
-
-        ItemStack item = new ItemStack(Material.PLAYER_HEAD);
-        SkullMeta skull = (SkullMeta) item.getItemMeta();
-        skull.setOwningPlayer(Bukkit.getPlayer(p.getName()));
-        item.setItemMeta(skull);
-
-        return item;
-    }
-
-    public static void spawnAbductParticlesWide(Player p, int lower, int upper) {
-
-        final int points = 27;
-        final double size = 5;
-
-        Bukkit.getOnlinePlayers().forEach(all -> {
-
-            for (double k = lower; k < upper; k += 3) {
-
-                for (int i = 0; i < 360; i += 360 / points) {
-                    final double angle = (i * Math.PI / 180);
-                    final double x = size * Math.cos(angle);
-                    final double z = size * Math.sin(angle);
-
-                    final Location locNew = p.getLocation().add(x, 0, z);
-                    locNew.setY(k);
-
-                    double offY = new Random().nextDouble(0, 0.33);
-
-                    all.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, locNew, 3, 0, offY, 0, 0.033, null, true);
-                    all.getWorld().spawnParticle(Particle.FLAME, locNew, 3, 0, offY, 0, 0.033, null, true);
-
-                }
-
-            }
-        });
-
-    }
-
-    @Override
-    public void onDisable() {
-
-        Bukkit.getServer().getScheduler().cancelTasks(this);
-
-        saveTrolls();
-        unsetHerobrines();
-
-    }
-
     @Override
     public void onEnable() {
         INSTANCE = this;
@@ -154,7 +105,14 @@ public class TrollBoss extends JavaPlugin {
         check4otherFile();
 
         new Metrics(this, METRICS_ID);
+    }
 
+    @Override
+    public void onDisable() {
+        Bukkit.getServer().getScheduler().cancelTasks(this);
+
+        saveTrolls();
+        unsetHerobrines();
     }
 
     private void saveDefaultConfigFile() {
@@ -190,9 +148,7 @@ public class TrollBoss extends JavaPlugin {
     }
 
     private void unsetHerobrines() {
-
         Bukkit.getOnlinePlayers().forEach(this::unsetHerobrine);
-
     }
 
     private void addSpamStuff() {
@@ -268,7 +224,6 @@ public class TrollBoss extends JavaPlugin {
     }
 
     public void notOnline(Player p, String name) {
-
         p.sendMessage(StringManager.PREFIX + "§ePlayer §7" + name + " §eis not online!");
     }
 

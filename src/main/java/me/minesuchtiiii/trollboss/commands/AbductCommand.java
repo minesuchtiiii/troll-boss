@@ -15,6 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class AbductCommand implements CommandExecutor {
 
@@ -98,7 +99,7 @@ public class AbductCommand implements CommandExecutor {
         target.addPotionEffect(levitation);
         task = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             startY[0] = (int) target.getLocation().getY() + 4;
-            TrollBoss.spawnAbductParticlesWide(target, startY[0], goalY + 8);
+            spawnAbductParticlesWide(target, startY[0], goalY + 8);
             target.spawnParticle(Objects.requireNonNull(Registry.PARTICLE_TYPE.get(NamespacedKey.minecraft("elder_guardian"))), target.getLocation(), 1, null);
             target.playSound(target.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, (float) 0.67, 1);
 
@@ -114,5 +115,34 @@ public class AbductCommand implements CommandExecutor {
 
             }
         }, 1L, 20L);
+    }
+
+    public static void spawnAbductParticlesWide(Player p, int lower, int upper) {
+
+        final int points = 27;
+        final double size = 5;
+
+        Bukkit.getOnlinePlayers().forEach(all -> {
+
+            for (double k = lower; k < upper; k += 3) {
+
+                for (int i = 0; i < 360; i += 360 / points) {
+                    final double angle = (i * Math.PI / 180);
+                    final double x = size * Math.cos(angle);
+                    final double z = size * Math.sin(angle);
+
+                    final Location locNew = p.getLocation().add(x, 0, z);
+                    locNew.setY(k);
+
+                    double offY = new Random().nextDouble(0, 0.33);
+
+                    all.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, locNew, 3, 0, offY, 0, 0.033, null, true);
+                    all.getWorld().spawnParticle(Particle.FLAME, locNew, 3, 0, offY, 0, 0.033, null, true);
+
+                }
+
+            }
+        });
+
     }
 }

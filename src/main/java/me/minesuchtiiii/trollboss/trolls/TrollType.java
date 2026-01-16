@@ -36,7 +36,7 @@ public enum TrollType {
     PUSH,
     RANDOMTP,
     RUNFORREST,
-    SHLONG,
+    SCHLONG,
     SKY,
     SPAM,
     SPANK,

@@ -2,6 +2,7 @@ package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
+import me.minesuchtiiii.trollboss.utils.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -78,8 +79,6 @@ public class PotatotrollCommand implements CommandExecutor {
     }
 
     private void replaceInventoryWithPotatoes(Player target) {
-        Random random = new Random();
-
         for (int i = 0; i < 36; i++) {
             if (target.getInventory().getItem(i) != null) {
                 plugin.potatoTroll.add(i);
@@ -87,11 +86,10 @@ public class PotatotrollCommand implements CommandExecutor {
         }
 
         plugin.potatoTroll.stream().mapToInt(Integer::intValue).forEach(slot -> {
-            int randomIndex = random.nextInt(plugin.color.size());
             ItemStack potato = new ItemStack(Material.BAKED_POTATO);
             ItemMeta potatoMeta = potato.getItemMeta();
 
-            potatoMeta.setDisplayName(plugin.color.get(randomIndex) + "Potato!");
+            potatoMeta.setDisplayName(Util.getRandomColor() + "Potato!");
             potato.setItemMeta(potatoMeta);
 
             target.getInventory().setItem(slot, potato);

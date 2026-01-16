@@ -7,6 +7,7 @@ import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.GuiItem;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import me.minesuchtiiii.trollboss.utils.UpdateChecker;
+import me.minesuchtiiii.trollboss.utils.Util;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -18,7 +19,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -35,7 +35,6 @@ public class TrollBoss extends JavaPlugin {
     public final Map<UUID, List<Location>> ufoBlockLocations = new HashMap<>();
     public final int max = 6;
     private final ArrayList<Entity> cows = new ArrayList<>();
-    private final ArrayList<String> spams = new ArrayList<>();
     private final File gbmsgs = new File(getDataFolder() + "/GarbageMessages.yml");
     private final File stats = new File(getDataFolder() + "/stats.yml");
     private final FileConfiguration gbmsgscfg = YamlConfiguration.loadConfiguration(gbmsgs);
@@ -44,10 +43,8 @@ public class TrollBoss extends JavaPlugin {
     private final HashMap<String, Integer> sixtySecondTimerTask = new HashMap<>();
     private final HashMap<String, Integer> tasks2 = new HashMap<>();
     private final HashMap<String, Location> rfloc = new HashMap<>();
-    private final HashMap<UUID, Integer> spamTask = new HashMap<>();
     private final HashMap<UUID, Inventory> invstores = new HashMap<>();
     public ArrayList<Integer> potatoTroll = new ArrayList<>();
-    public ArrayList<String> color = new ArrayList<>();
     public HashMap<Integer, Location> altblockloc = new HashMap<>();
     public HashMap<Integer, Location> block = new HashMap<>();
     public HashMap<Integer, Location> blockloc = new HashMap<>();
@@ -67,7 +64,6 @@ public class TrollBoss extends JavaPlugin {
     public HashMap<UUID, Integer> spartaArrows = new HashMap<>();
     public HashMap<UUID, Location> abductedCachedLocations = new HashMap<>();
     public HashMap<UUID, UUID> trolling = new HashMap<>();
-    public HashSet<UUID> spammedPlayers = new HashSet<>();
     public boolean c;
     public boolean creep;
     public boolean isRestarting = false;
@@ -100,7 +96,6 @@ public class TrollBoss extends JavaPlugin {
         update = getConfig().getBoolean("Auto-Update");
 
         checkForUpdate();
-        addSpamStuff();
         check4File();
         check4otherFile();
 
@@ -151,63 +146,6 @@ public class TrollBoss extends JavaPlugin {
         Bukkit.getOnlinePlayers().forEach(this::unsetHerobrine);
     }
 
-    private void addSpamStuff() {
-
-        color.addAll(List.of("§a", "§b", "§c", "§d", "§e", "§f", "§1", "§2", "§3", "§4", "§5", "§6", "§7", "§8", "§9", "§o", "§k", "§m", "§n", "§l"));
-
-        spams.add("Hello, world!");
-        spams.add("You're being trolled!");
-        spams.add("Prepare for epic spam!");
-        spams.add("Oops, did I do that?");
-        spams.add("Time to rage!");
-        spams.add("Keep calm and carry on.");
-        spams.add("This is not a drill.");
-        spams.add("Surprise, surprise!");
-        spams.add("You just got pranked!");
-        spams.add("I come in peace... or do I?");
-        spams.add("Beware of the troll!");
-        spams.add("Is it Friday yet?");
-        spams.add("Chill out and enjoy.");
-        spams.add("Don't feed the trolls!");
-        spams.add("Enjoy your day!");
-        spams.add("Buckle up, buttercup!");
-        spams.add("No comment.");
-        spams.add("Who let the trolls out?");
-        spams.add("Haha, gotcha!");
-        spams.add("This is your daily dose of randomness.");
-        spams.add("Randomness is the spice of life.");
-        spams.add("Smile, it's contagious!");
-        spams.add("I speak fluent nonsense.");
-        spams.add("Expect the unexpected.");
-        spams.add("Tick tock, time's up!");
-        spams.add("Unleash the spam!");
-        spams.add("Trolls will be trolls.");
-        spams.add("Why so serious?");
-        spams.add("Carpe diem!");
-        spams.add("All your base are belong to us.");
-        spams.add("Nyan nyan nyan.");
-        spams.add("This is getting out of hand.");
-        spams.add("Can you handle the truth?");
-        spams.add("The cake is a lie!");
-        spams.add("Keep your friends close, enemies closer.");
-        spams.add("I solemnly swear I'm up to no good.");
-        spams.add("Wubba lubba dub dub!");
-        spams.add("May the force be with you.");
-        spams.add("You're awesome!");
-        spams.add("Hello, dark knight.");
-        spams.add("Don't stop believing.");
-        spams.add("We are the champions!");
-        spams.add("Another one bites the dust.");
-        spams.add("I'm in me mum's car, vroom vroom!");
-        spams.add("Fortune favors the bold.");
-        spams.add("Stay weird!");
-        spams.add("And now, a random fact: Honey never spoils.");
-        spams.add("Just when you thought it was safe...");
-        spams.add("This message is brought to you by random chance.");
-        spams.add("Did you know? Bananas are berries!");
-
-    }
-
     private void checkForUpdate() {
 
         new UpdateChecker(this, 47423).getVersion(version -> {
@@ -225,38 +163,6 @@ public class TrollBoss extends JavaPlugin {
 
     public void notOnline(Player p, String name) {
         p.sendMessage(StringManager.PREFIX + "§ePlayer §7" + name + " §eis not online!");
-    }
-
-    public void spamPlayer(Player target, int amount) {
-
-        spammedPlayers.add(target.getUniqueId());
-        final int[] number = {amount};
-
-        int task = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-
-            if (number[0] > 0) {
-                final Random r = new Random();
-                final int i = r.nextInt(this.spams.size());
-
-                final Random x = new Random();
-                final int a = x.nextInt(this.color.size());
-
-                target.sendMessage(this.color.get(a) + this.spams.get(i));
-
-                number[0]--;
-
-            }
-            if (number[0] == 0) {
-                spammedPlayers.remove(target.getUniqueId());
-                Bukkit.getScheduler().cancelTask(spamTask.get(target.getUniqueId()));
-                spamTask.remove(target.getUniqueId());
-            }
-
-
-        }, 0L, 20L);
-
-        spamTask.put(target.getUniqueId(), task);
-
     }
 
     public void sendHelp(Player p, int i) {
@@ -589,10 +495,6 @@ public class TrollBoss extends JavaPlugin {
 
     @SuppressWarnings("deprecation")
     public void spawnCow(Player p) {
-
-        final Random r = new Random();
-        final int ran = r.nextInt(this.color.size());
-
         final Location ploc = p.getLocation();
 
         final Silverfish fish = (Silverfish) p.getWorld().spawnEntity(p.getLocation(), EntityType.SILVERFISH);
@@ -611,7 +513,7 @@ public class TrollBoss extends JavaPlugin {
         fish2.setAggressive(true);
         fish2.setTarget(p);
 
-        fish2.setCustomName(this.color.get(ran) + "Mad Cow");
+        fish2.setCustomName(Util.getRandomColor() + "Mad Cow");
         fish2.setCustomNameVisible(false);
 
         cow.addPassenger(fish2);
@@ -679,9 +581,7 @@ public class TrollBoss extends JavaPlugin {
 
     private void spawnCreeperWithName(Player player, Location location, int amount, String creeperName) {
         World world = player.getWorld();
-        Random random = new Random();
-        int randomIndex = random.nextInt(this.color.size());
-        String customName = this.color.get(randomIndex) + creeperName;
+        String customName = Util.getRandomColor() + creeperName;
 
         for (int i = 0; i < amount; i++) {
             Creeper creeper = (Creeper) world.spawnEntity(location, EntityType.CREEPER);
@@ -702,10 +602,8 @@ public class TrollBoss extends JavaPlugin {
     private void spawnCreeper(Location location, Player player, String creeperName) {
         World world = player.getWorld();
         Creeper creeper = (Creeper) world.spawnEntity(location, EntityType.CREEPER);
-        Random random = new Random();
-        int randomIndex = random.nextInt(this.color.size());
 
-        creeper.setCustomName(this.color.get(randomIndex) + creeperName);
+        creeper.setCustomName(Util.getRandomColor() + creeperName);
         creeper.setCustomNameVisible(true);
         creeper.setPowered(true);
         creeper.setRemoveWhenFarAway(true);
@@ -1101,13 +999,9 @@ public class TrollBoss extends JavaPlugin {
     }
 
     private void addInventoryTextItem(Player p, int inventorySlot, String text, int amount) {
-
-        final Random x = new Random();
-        final int a = x.nextInt(TrollBoss.this.color.size());
-
         final ItemStack dirt1 = new ItemStack(Material.DIRT, amount);
         final ItemMeta dirt1meta = dirt1.getItemMeta();
-        dirt1meta.setDisplayName(this.color.get(a) + text);
+        dirt1meta.setDisplayName(Util.getRandomColor() + text);
         dirt1.setItemMeta(dirt1meta);
 
         p.getInventory().setItem(inventorySlot, dirt1);

@@ -12,11 +12,11 @@ import java.util.UUID;
 
 public class MoveListener implements Listener {
 
-	@EventHandler
-	public void onMove(PlayerMoveEvent e) {
-		final Player p = e.getPlayer();
+    @EventHandler
+    public void onMove(PlayerMoveEvent e) {
+        final Player p = e.getPlayer();
 
-		if (isMovementRestricted(p.getUniqueId())) return;
+        if (!isMovementRestricted(p.getUniqueId())) return;
 
         Location from = e.getFrom();
         Location to = e.getTo();
@@ -25,7 +25,7 @@ public class MoveListener implements Listener {
         if (from.getBlockX() != to.getBlockX() || from.getBlockZ() != to.getBlockZ()) {
             e.setCancelled(true);
         }
-	}
+    }
 
     private boolean isMovementRestricted(UUID uuid) {
         return TrollManager.isActive(uuid, TrollType.DENYMOVE)

@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class CrashCommand implements CommandExecutor {
-    private static final String MESSAGE = "§cInternal exception: java.net.SocketException: Connection reset. Restart your game.";
+    private static final String MESSAGE = "<red>Internal exception: java.net.SocketException: Connection reset. Restart your game.";
     private static final Component KICK_MESSAGE = MiniMessage.miniMessage().deserialize(MESSAGE);
     private final TrollBoss plugin;
 
@@ -91,7 +91,7 @@ public class CrashCommand implements CommandExecutor {
         TrollManager.activate(target.getUniqueId(), TrollType.CRASH);
         target.kick(KICK_MESSAGE);
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                TrollManager.activate(target.getUniqueId(), TrollType.CRASH);
+            TrollManager.activate(target.getUniqueId(), TrollType.CRASH);
         }, 15 * 20L);
     }
 }

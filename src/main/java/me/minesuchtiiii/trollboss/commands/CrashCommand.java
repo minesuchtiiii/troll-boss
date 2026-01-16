@@ -91,7 +91,7 @@ public class CrashCommand implements CommandExecutor {
         TrollManager.activate(target.getUniqueId(), TrollType.CRASH);
         target.kick(KICK_MESSAGE);
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                TrollManager.activate(target.getUniqueId(), TrollType.CRASH);
+            TrollManager.activate(target.getUniqueId(), TrollType.CRASH);
         }, 15 * 20L);
     }
 }

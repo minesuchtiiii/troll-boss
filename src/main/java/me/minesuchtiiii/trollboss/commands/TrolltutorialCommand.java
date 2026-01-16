@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.manager.TutorialManager;
+import me.minesuchtiiii.trollboss.manager.trolltutorial.TutorialManager;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -36,5 +36,4 @@ public class TrolltutorialCommand implements CommandExecutor {
 
         return true;
     }
-
 }

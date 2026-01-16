@@ -22,7 +22,7 @@ public class MoveListener implements Listener {
         if (isChangingBlock(from, to)) {
             e.setCancelled(true);
         }
-	}
+    }
 
     private boolean isMovementRestricted(UUID uuid) {
         return TrollManager.isActive(uuid, TrollType.DENYMOVE)

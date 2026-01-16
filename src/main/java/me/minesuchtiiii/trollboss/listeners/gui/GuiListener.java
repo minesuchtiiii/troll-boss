@@ -3,7 +3,7 @@ package me.minesuchtiiii.trollboss.listeners.gui;
 import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.manager.GuiManager;
 import me.minesuchtiiii.trollboss.manager.TrollManager;
-import me.minesuchtiiii.trollboss.manager.TutorialManager;
+import me.minesuchtiiii.trollboss.manager.trolltutorial.TutorialManager;
 import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;

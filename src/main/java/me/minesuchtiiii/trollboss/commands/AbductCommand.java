@@ -114,7 +114,7 @@ public class AbductCommand implements CommandExecutor {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     target.setHealth(20.0);
                     ufo.teleportBackFromUfo(target);
-                    TrollManager.deactivate(target.getUniqueId(), TrollType.DENYMOVE);
+                    TrollManager.deactivate(target.getUniqueId(), TrollType.ABDUCT);
                 }, 150L);
 
             }

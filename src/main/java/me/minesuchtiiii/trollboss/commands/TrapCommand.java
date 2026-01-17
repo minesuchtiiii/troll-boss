@@ -1,7 +1,10 @@
 package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
+import me.minesuchtiiii.trollboss.utils.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -61,8 +64,8 @@ public class TrapCommand implements CommandExecutor {
             return true;
         }
 
-        if (plugin.isTrapped) {
-            player.sendMessage(StringManager.PREFIX + "§cSomeone is already trapped.");
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.TRAP)) {
+            player.sendMessage(StringManager.PREFIX + "§cThis player is already trapped.");
             return true;
         }
 
@@ -76,17 +79,18 @@ public class TrapCommand implements CommandExecutor {
             return true;
         }
 
-        plugin.isTrapped = true;
+        TrollManager.activate(target.getUniqueId(), TrollType.TRAP);
         plugin.addTroll();
         plugin.addStats("Trap", player);
 
         final Location targetLocation = target.getLocation();
+        Util.centerPlayer(target);
         createTrapAround(targetLocation);
 
         double timeInMinutes = trapTime / 60.0;
         player.sendMessage(StringManager.PREFIX + "§eTrapped §7" + target.getName() + " §efor §7" + trapTime + " seconds! §c(~" + new DecimalFormat("##.##").format(timeInMinutes) + " minutes)");
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, this::releaseTrap, trapTime * 20L);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> releaseTrap(target), trapTime * 20L);
 
         return true;
     }
@@ -117,7 +121,7 @@ public class TrapCommand implements CommandExecutor {
         }
     }
 
-    private void releaseTrap() {
+    private void releaseTrap(Player player) {
         for (int i = 1; i <= 10; i++) {
             Location blockLocation = plugin.blocks.get(i);
             blockLocation.getWorld().getBlockAt(blockLocation).setType(Material.AIR);
@@ -132,6 +136,6 @@ public class TrapCommand implements CommandExecutor {
         plugin.blocks.clear();
         plugin.oldBlocksLocation.clear();
         plugin.numbersmat.clear();
-        plugin.isTrapped = false;
+        TrollManager.deactivate(player.getUniqueId(), TrollType.TRAP);
     }
 }

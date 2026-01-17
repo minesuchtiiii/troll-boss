@@ -2,6 +2,7 @@ package me.minesuchtiiii.trollboss.commands;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollFlag;
 import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import me.minesuchtiiii.trollboss.utils.Ufo;
@@ -16,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AbductCommand implements CommandExecutor {
 
@@ -75,12 +77,10 @@ public class AbductCommand implements CommandExecutor {
     }
 
     private void performAbduction(Player player, Player target) {
-        TrollManager.activate(target.getUniqueId(), TrollType.NOMINE);
-        TrollManager.activate(target.getUniqueId(), TrollType.DENYMOVE);
+        TrollManager.activate(target.getUniqueId(), TrollType.ABDUCT);
 
         final Location location = target.getLocation();
         Ufo ufo = new Ufo(target, plugin);
-        TrollManager.activate(target.getUniqueId(), TrollType.ABDUCT);
         plugin.abductedCachedLocations.put(target.getUniqueId(), location);
 
         plugin.addTroll();
@@ -107,10 +107,14 @@ public class AbductCommand implements CommandExecutor {
                 Bukkit.getScheduler().cancelTask(task);
                 target.clearActivePotionEffects();
                 target.teleport(target.getLocation().add(0, 7.5, 0));
-                TrollManager.deactivate(target.getUniqueId(), TrollType.DENYMOVE);
+
+                // Once the player reaches the UFO he is able to move around again
+                TrollManager.suppressFlag(target.getUniqueId(), TrollType.ABDUCT, TrollFlag.PREVENT_GROUND_MOVEMENT);
+
                 Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     target.setHealth(20.0);
                     ufo.teleportBackFromUfo(target);
+                    TrollManager.deactivate(target.getUniqueId(), TrollType.DENYMOVE);
                 }, 150L);
 
             }
@@ -122,27 +126,32 @@ public class AbductCommand implements CommandExecutor {
         final int points = 27;
         final double size = 5;
 
-        Bukkit.getOnlinePlayers().forEach(all -> {
+        // 1. Get references once outside of the loops
+        final World world = p.getWorld();
+        final Location origin = p.getLocation(); // Basis-Position
+        final Location workerLoc = origin.clone();
 
-            for (double k = lower; k < upper; k += 3) {
+        // Get reference to the random generator (much faster than new Random())
+        final ThreadLocalRandom random = ThreadLocalRandom.current();
 
-                for (int i = 0; i < 360; i += 360 / points) {
-                    final double angle = (i * Math.PI / 180);
-                    final double x = size * Math.cos(angle);
-                    final double z = size * Math.sin(angle);
+        for (double k = lower; k < upper; k += 3) {
 
-                    final Location locNew = p.getLocation().add(x, 0, z);
-                    locNew.setY(k);
+            workerLoc.setY(k);
 
-                    double offY = new Random().nextDouble(0, 0.33);
+            for (int i = 0; i < 360; i += 360 / points) {
 
-                    all.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, locNew, 3, 0, offY, 0, 0.033, null, true);
-                    all.getWorld().spawnParticle(Particle.FLAME, locNew, 3, 0, offY, 0, 0.033, null, true);
+                double angle = Math.toRadians(i);
+                double x = size * Math.cos(angle);
+                double z = size * Math.sin(angle);
 
-                }
+                workerLoc.setX(origin.getX() + x);
+                workerLoc.setZ(origin.getZ() + z);
 
+                double offY = random.nextDouble(0, 0.33);
+
+                world.spawnParticle(Particle.SOUL_FIRE_FLAME, workerLoc, 3, 0, offY, 0, 0.033, null, true);
+                world.spawnParticle(Particle.FLAME, workerLoc, 3, 0, offY, 0, 0.033, null, true);
             }
-        });
-
+        }
     }
 }

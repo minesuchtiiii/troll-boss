@@ -1,8 +1,12 @@
 package me.minesuchtiiii.trollboss.trolls;
 
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.Set;
+
 public enum TrollType {
 
-    ABDUCT,
+    ABDUCT(TrollFlag.PREVENT_GROUND_MOVEMENT, TrollFlag.PREVENT_MINING),
     ANVIL,
     BADAPPLE,
     BOLT,
@@ -12,7 +16,7 @@ public enum TrollType {
     BURY,
     CRASH,
     CREEPER,
-    DENYMOVE,
+    DENYMOVE(TrollFlag.PREVENT_ALL_MOVEMENT),
     DROPINV,
     DRUG,
     FAKEDEOP,
@@ -27,8 +31,8 @@ public enum TrollType {
     INFECT,
     INVTEXT,
     LAUNCH,
-    NOMINE,
-    NOOB,
+    NOMINE(TrollFlag.PREVENT_MINING),
+    NOOB(TrollFlag.PREVENT_ALL_MOVEMENT),
     POPULAR,
     POPUP,
     POTATOTROLL,
@@ -37,17 +41,33 @@ public enum TrollType {
     RANDOMTP,
     RUNFORREST,
     SCHLONG,
-    SKY,
+    SKY(TrollFlag.PREVENT_GROUND_MOVEMENT),
     SPAM,
     SPANK,
     SPARTA,
     SQUIDRAIN,
     STARVE,
-    STFU,
+    STFU(TrollFlag.PREVENT_CHAT),
     TRAMPLE,
-    TRAP,
+    TRAP(TrollFlag.PREVENT_MINING),
     TROLLKICK,
     TURN,
-    VOID,
-    WEBTRAP,
+    VOID(TrollFlag.PREVENT_GROUND_MOVEMENT),
+    WEBTRAP;
+
+    private final Set<TrollFlag> flags;
+
+    TrollType(TrollFlag... flags) {
+        if (flags.length == 0) {
+            this.flags = Collections.emptySet();
+        }
+        else {
+            this.flags = EnumSet.of(flags[0], flags);
+        }
+    }
+
+    public boolean hasFlag(TrollFlag flag) {
+        return flags.contains(flag);
+    }
+
 }

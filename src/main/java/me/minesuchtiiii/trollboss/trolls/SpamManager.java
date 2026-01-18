@@ -26,7 +26,7 @@ public class SpamManager {
                 number[0]--;
             }
             if (number[0] == 0) {
-                TrollManager.activate(uuid, TrollType.SPAM);
+                TrollManager.deactivate(uuid, TrollType.SPAM);
                 Bukkit.getScheduler().cancelTask(spamTask.get(uuid));
                 spamTask.remove(uuid);
             }

@@ -355,9 +355,7 @@ public class Ufo {
             p.setHealth(20D);
             p.teleport(plugin.abductedCachedLocations.get(playerUUID));
             plugin.abductedCachedLocations.remove(playerUUID);
-            TrollManager.deactivate(playerUUID, TrollType.ABDUCT);
             Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> p.setGameMode(GameMode.SURVIVAL), 10L);
-            TrollManager.deactivate(playerUUID, TrollType.NOMINE);
             removeUfo(playerUUID);
 
         }, 15 * 20L);

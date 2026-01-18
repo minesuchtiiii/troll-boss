@@ -1,6 +1,7 @@
 package me.minesuchtiiii.trollboss.utils;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -27,4 +28,18 @@ public class Util {
 
         return item;
     }
+
+    /**
+     * Teleports the player to the center of the block they are currently standing on.
+     * Adjusts the player's X and Z coordinates to be precisely at the middle of their current block.
+     *
+     * @param p the player to be centered on the block
+     */
+    public static void centerPlayer(Player p) {
+        Location loc = p.getLocation();
+        loc.setX(loc.getBlockX() + 0.5);
+        loc.setZ(loc.getBlockZ() + 0.5);
+        p.teleport(loc);
+    }
+
 }

@@ -63,7 +63,7 @@ public class RegisterEvents {
         pm.registerEvents(new QuitListenerRestart(), plugin);
         pm.registerEvents(new DeathListenerBug(), plugin);
         pm.registerEvents(new DeathListenerVoid(), plugin);
-        pm.registerEvents(new MineListener(plugin), plugin);
+        pm.registerEvents(new MineListener(), plugin);
         pm.registerEvents(new InteractBlockShooterListener(plugin), plugin);
         pm.registerEvents(new EntityDamageByBlockShooterListener(), plugin);
         pm.registerEvents(new DeathRemoveSpecialListener(), plugin);

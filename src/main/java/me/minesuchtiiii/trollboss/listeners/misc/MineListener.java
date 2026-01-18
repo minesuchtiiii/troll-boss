@@ -1,8 +1,7 @@
 package me.minesuchtiiii.trollboss.listeners.misc;
 
-import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.manager.TrollManager;
-import me.minesuchtiiii.trollboss.trolls.TrollType;
+import me.minesuchtiiii.trollboss.trolls.TrollFlag;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -10,13 +9,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import java.util.UUID;
 
 public class MineListener implements Listener {
-
-    private final TrollBoss plugin;
-
-    public MineListener(TrollBoss plugin) {
-
-        this.plugin = plugin;
-    }
 
     @EventHandler
     public void onMine(BlockBreakEvent e) {
@@ -26,10 +18,7 @@ public class MineListener implements Listener {
     }
 
     private boolean isMineRestricted(UUID uuid) {
-        return this.plugin.isTrapped
-                || TrollManager.isActive(uuid, TrollType.NOMINE)
-                || TrollManager.isActive(uuid, TrollType.SKY)
-                || TrollManager.isActive(uuid, TrollType.NOOB);
+        return TrollManager.hasFlag(uuid, TrollFlag.PREVENT_MINING);
     }
 
 }

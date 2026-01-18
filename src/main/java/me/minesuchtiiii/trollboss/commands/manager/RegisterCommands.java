@@ -2,9 +2,9 @@ package me.minesuchtiiii.trollboss.commands.manager;
 
 import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.commands.*;
-import me.minesuchtiiii.trollboss.tabcomplete.Tc_Troll;
-import me.minesuchtiiii.trollboss.tabcomplete.Tc_TrollOp;
-import me.minesuchtiiii.trollboss.tabcomplete.Tc_Trolltutorial;
+import me.minesuchtiiii.trollboss.tabcomplete.TrollTabCompleter;
+import me.minesuchtiiii.trollboss.tabcomplete.TrollOpTabCompleter;
+import me.minesuchtiiii.trollboss.tabcomplete.TrollTutorialTabCompleter;
 import org.bukkit.command.PluginCommand;
 
 import javax.annotation.Nullable;
@@ -16,7 +16,7 @@ public class RegisterCommands {
     public static void register(TrollBoss plugin) {
 
         requireCommand("troll").setExecutor(new TrollCommand(plugin));
-        requireCommand("troll").setTabCompleter(new Tc_Troll(plugin));
+        requireCommand("troll").setTabCompleter(new TrollTabCompleter());
         requireCommand("burn").setExecutor(new BurnCommand(plugin));
         requireCommand("freeze").setExecutor(new FreezeCommand(plugin));
         requireCommand("bolt").setExecutor(new BoltCommand(plugin));
@@ -52,7 +52,7 @@ public class RegisterCommands {
         requireCommand("spank").setExecutor(new SpankCommand(plugin));
         requireCommand("trample").setExecutor(new TrampleCommand(plugin));
         requireCommand("trollop").setExecutor(new TrollopCommand(plugin));
-        requireCommand("trollop").setTabCompleter(new Tc_TrollOp());
+        requireCommand("trollop").setTabCompleter(new TrollOpTabCompleter());
         requireCommand("stfu").setExecutor(new StfuCommand(plugin));
         requireCommand("popup").setExecutor(new PopupCommand(plugin));
         requireCommand("sky").setExecutor(new SkyCommand(plugin));
@@ -64,7 +64,7 @@ public class RegisterCommands {
         requireCommand("drug").setExecutor(new DrugCommand(plugin));
         requireCommand("squidrain").setExecutor(new SquidrainCommand(plugin));
         requireCommand("trolltutorial").setExecutor(new TrolltutorialCommand());
-        requireCommand("trolltutorial").setTabCompleter(new Tc_Trolltutorial(plugin));
+        requireCommand("trolltutorial").setTabCompleter(new TrollTutorialTabCompleter());
         requireCommand("dropinv").setExecutor(new DropinvCommand(plugin));
         requireCommand("garbage").setExecutor(new GarbageCommand(plugin));
         requireCommand("anvil").setExecutor(new AnvilCommand(plugin));

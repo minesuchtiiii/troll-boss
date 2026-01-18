@@ -31,9 +31,10 @@ import java.util.stream.Collectors;
 // This thing is a god class and needs to be refactored heavily :/
 public class TrollBoss extends JavaPlugin {
 
+    public static final int HELP_PAGES = 6;
     private static final int METRICS_ID = 15941;
+    private static TrollBoss INSTANCE;
     public final Map<UUID, List<Location>> ufoBlockLocations = new HashMap<>();
-    public final int max = 6;
     private final ArrayList<Entity> cows = new ArrayList<>();
     private final File gbmsgs = new File(getDataFolder() + "/GarbageMessages.yml");
     private final File stats = new File(getDataFolder() + "/stats.yml");
@@ -67,8 +68,6 @@ public class TrollBoss extends JavaPlugin {
     public boolean c;
     public boolean creep;
     public boolean isRestarting = false;
-    public boolean isTrapped;
-    public boolean isVoid = false;
     public boolean worked = false;
     public int bowCreepers = 0;
     public int creepers = 0;
@@ -78,7 +77,6 @@ public class TrollBoss extends JavaPlugin {
     public int trollBuffer = 0;
     private String version;
     private boolean update;
-    private static TrollBoss INSTANCE;
 
     public static TrollBoss getInstance() {
         return INSTANCE;
@@ -116,6 +114,7 @@ public class TrollBoss extends JavaPlugin {
         getConfig().addDefault("Troll-Operators", true);
         getConfig().addDefault("Trolls", 0);
 
+        //TODO: This needs to be addressed since MC is about to switch to Calendar Versioning (e.g. 26.1.1)
         int version = Integer.parseInt(getServer().getMinecraftVersion().split("\\.")[1]);
         int subVersion = Integer.parseInt(getServer().getMinecraftVersion().split("\\.")[2]);
 
@@ -167,11 +166,11 @@ public class TrollBoss extends JavaPlugin {
 
     public void sendHelp(Player p, int i) {
 
-        if ((i > 0) && (i < max + 1)) {
+        if ((i > 0) && (i < HELP_PAGES + 1)) {
             if (i == 1) {
 
                 p.sendMessage("§7§l|§e§l==============§7§l| §r§cHelp page §4" + i +
-                        "§c/§4" + max + "§7§l |§e§l==============§7§l|");
+                        "§c/§4" + HELP_PAGES + "§7§l |§e§l==============§7§l|");
                 p.sendMessage("§a * §7[§cTrollBoss§7] §7§l§oHere's a list of all available commands:");
                 p.sendMessage("§a * §7[§cTrollBoss§7] §e/troll");
                 p.sendMessage("§a * §7[§cTrollBoss§7] §e/troll help §c[page]");
@@ -190,7 +189,7 @@ public class TrollBoss extends JavaPlugin {
             } else if (i == 2) {
 
                 p.sendMessage("§7§l|§e§l==============§7§l| §r§cHelp page §4" + i +
-                        "§c/§4" + max + "§7§l |§e§l==============§7§l|");
+                        "§c/§4" + HELP_PAGES + "§7§l |§e§l==============§7§l|");
                 p.sendMessage("§a * §7[§cTrollBoss§7] §7§l§oHere's a list of all available commands:");
                 p.sendMessage("§a * §7[§cTrollBoss§7] §e/launch §7[player / all]");
                 p.sendMessage("§a * §7[§cTrollBoss§7] §e/fakeop §7[player]");
@@ -208,7 +207,7 @@ public class TrollBoss extends JavaPlugin {
             } else if (i == 3) {
 
                 p.sendMessage("§7§l|§e§l==============§7§l| §r§cHelp page §4" + i +
-                        "§c/§4" + max + "§7§l |§e§l==============§7§l|");
+                        "§c/§4" + HELP_PAGES + "§7§l |§e§l==============§7§l|");
                 p.sendMessage("§a * §7[§cTrollBoss§7] §7§l§oHere's a list of all available commands:");
                 p.sendMessage("§a * §7[§cTrollBoss§7] §e/denymove §7[player / all] §c[delay]");
                 p.sendMessage("§a * §7[§cTrollBoss§7] §e/potatotroll §7[player]");
@@ -227,7 +226,7 @@ public class TrollBoss extends JavaPlugin {
             } else if (i == 4) {
 
                 p.sendMessage("§7§l|§e§l==============§7§l| §r§cHelp page §4" + i +
-                        "§c/§4" + max + "§7§l |§e§l==============§7§l|");
+                        "§c/§4" + HELP_PAGES + "§7§l |§e§l==============§7§l|");
                 p.sendMessage("§a * §7[§cTrollBoss§7] §7§l§oHere's a list of all available commands:");
                 p.sendMessage("§a * §7[§cTrollBoss§7] §e/void §7[player]");
                 p.sendMessage("§a * §7[§cTrollBoss§7] §e/pumpkinhead §7[player]");
@@ -246,7 +245,7 @@ public class TrollBoss extends JavaPlugin {
             } else if (i == 5) {
 
                 p.sendMessage("§7§l|§e§l==============§7§l| §r§cHelp page §4" + i +
-                        "§c/§4" + max + "§7§l |§e§l==============§7§l|");
+                        "§c/§4" + HELP_PAGES + "§7§l |§e§l==============§7§l|");
                 p.sendMessage("§a * §7[§cTrollBoss§7] §7§l§oHere's a list of all available commands:");
                 p.sendMessage("§a * §7[§cTrollBoss§7] §e/stfu §7[player]");
                 p.sendMessage("§a * §7[§cTrollBoss§7] §e/popup §7[player]");
@@ -265,7 +264,7 @@ public class TrollBoss extends JavaPlugin {
             } else {
 
                 p.sendMessage("§7§l|§e§l==============§7§l| §r§cHelp page §4" + i +
-                        "§c/§4" + max + "§7§l |§e§l==============§7§l|");
+                        "§c/§4" + HELP_PAGES + "§7§l |§e§l==============§7§l|");
                 p.sendMessage("§a * §7[§cTrollBoss§7] §7§l§oHere's a list of all available commands:");
                 p.sendMessage("§a * §7[§cTrollBoss§7] §e/dropinv §7[player]");
                 p.sendMessage("§a * §7[§cTrollBoss§7] §e/garbage §7[player] §c[on | off]");
@@ -342,15 +341,11 @@ public class TrollBoss extends JavaPlugin {
 
     public boolean canBeTrolled(Player p) {
 
-        if (p.isOp() && !getConfig().getBoolean("Troll-Operators")) {
-            return false;
+        if (p.isOp()) {
+            return getConfig().getBoolean("Troll-Operators");
         }
 
-        if (!p.isOp() && p.hasPermission("troll.bypass")) {
-            return false;
-        }
-        return true;
-
+        return !p.hasPermission("troll.bypass");
     }
 
     public int createRandom(int lower, int upper) {

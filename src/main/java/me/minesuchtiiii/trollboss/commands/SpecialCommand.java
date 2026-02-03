@@ -1,24 +1,22 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.items.AK47Item;
+import me.minesuchtiiii.trollboss.items.BlockShooterItem;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 public class SpecialCommand implements CommandExecutor {
-    private static final String SPECIAL_ITEM_NAME_1 = "§cAK-47";
-    private static final String SPECIAL_ITEM_NAME_2 = "§cBlock Shooter";
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public SpecialCommand(Main plugin) {
+    public SpecialCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 
@@ -53,8 +51,8 @@ public class SpecialCommand implements CommandExecutor {
 
     private void handleSelfSpecial(Player player, String specialNumber) {
         switch (specialNumber) {
-            case "1" -> giveSpecialItem(player, createSpecialItem(Material.IRON_AXE, SPECIAL_ITEM_NAME_1), "§e#1");
-            case "2" -> giveSpecialItem(player, createSpecialItem(Material.BLAZE_ROD, SPECIAL_ITEM_NAME_2), "§e#2");
+            case "1" -> giveSpecialItem(player, AK47Item.create(), "§e#1");
+            case "2" -> giveSpecialItem(player, BlockShooterItem.create(), "§e#2");
             default -> player.sendMessage(StringManager.PREFIX + "§cInvalid special number!");
         }
     }
@@ -67,26 +65,10 @@ public class SpecialCommand implements CommandExecutor {
         }
 
         switch (specialNumber) {
-            case "1" -> {
-                ItemStack item = createSpecialItem(Material.IRON_AXE, SPECIAL_ITEM_NAME_1);
-                giveSpecialItemToTarget(player, target, item, SPECIAL_ITEM_NAME_1);
-            }
-            case "2" -> {
-                ItemStack item = createSpecialItem(Material.BLAZE_ROD, SPECIAL_ITEM_NAME_2);
-                giveSpecialItemToTarget(player, target, item, SPECIAL_ITEM_NAME_2);
-            }
+            case "1" -> giveSpecialItemToTarget(player, target, AK47Item.create(), AK47Item.NAME_STRING);
+            case "2" -> giveSpecialItemToTarget(player, target, BlockShooterItem.create(), BlockShooterItem.NAME_STRING);
             default -> player.sendMessage(StringManager.PREFIX + "§cInvalid special number!");
         }
-    }
-
-    private ItemStack createSpecialItem(Material material, String displayName) {
-        ItemStack itemStack = new ItemStack(material);
-        ItemMeta meta = itemStack.getItemMeta();
-        if (meta != null) {
-            meta.setDisplayName(displayName);
-            itemStack.setItemMeta(meta);
-        }
-        return itemStack;
     }
 
     private void giveSpecialItem(Player player, ItemStack item, String specialNumber) {

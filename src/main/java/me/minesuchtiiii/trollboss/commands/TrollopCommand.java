@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,9 +12,9 @@ public class TrollopCommand implements CommandExecutor {
     private static final String TROLL_OPERATORS_KEY = "Troll-Operators";
     private static final String USAGE_MESSAGE = StringManager.PREFIX + "§eUse §7/trollop [true | false | status]";
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public TrollopCommand(Main plugin) {
+    public TrollopCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

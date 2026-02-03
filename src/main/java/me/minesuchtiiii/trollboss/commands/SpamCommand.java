@@ -1,6 +1,9 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.SpamManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -15,10 +18,10 @@ public class SpamCommand implements CommandExecutor {
     private static final String ERROR_INVALID_NUMBER = StringManager.PREFIX + "§cCan't use that number! %s";
     private static final String ERROR_ALREADY_SPAMMED = StringManager.PREFIX + "§cThis player is already being spammed!";
 
-    private final Main plugin;
+    private final TrollBoss plugin;
     private final int maxSpam;
 
-    public SpamCommand(Main plugin) {
+    public SpamCommand(TrollBoss plugin) {
         this.plugin = plugin;
         this.maxSpam = 100;
     }
@@ -78,7 +81,7 @@ public class SpamCommand implements CommandExecutor {
             return;
         }
 
-        if (plugin.spammedPlayers.contains(target.getUniqueId())) {
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.SPAM)) {
             player.sendMessage(ERROR_ALREADY_SPAMMED);
             return;
         }
@@ -90,6 +93,6 @@ public class SpamCommand implements CommandExecutor {
         plugin.addTroll();
         plugin.addStats("Spam", player);
         player.sendMessage(StringManager.PREFIX + "§7" + target.getName() + " §ewill be spammed for §7" + amount + " §etimes!");
-        plugin.spamPlayer(target, amount);
+        SpamManager.spamPlayer(target, amount);
     }
 }

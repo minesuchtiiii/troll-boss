@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -15,9 +15,9 @@ public class DrugCommand implements CommandExecutor {
     private static final int POTION_DURATION = 60 * 20; // 60 seconds
     private static final int POTION_AMPLIFIER = 1;
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public DrugCommand(Main plugin) {
+    public DrugCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -14,9 +16,9 @@ import org.jetbrains.annotations.NotNull;
 public class FreefallCommand implements CommandExecutor {
 
     private static final int MAX_HEIGHT = 10000;
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public FreefallCommand(Main plugin) {
+    public FreefallCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 
@@ -75,7 +77,7 @@ public class FreefallCommand implements CommandExecutor {
             return false;
         }
 
-        if (this.plugin.freefall.contains(target.getUniqueId())) {
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.FREEFALL)) {
             sender.sendMessage(StringManager.PREFIX + "§cCan't do this right now!");
             return false;
         }
@@ -93,13 +95,13 @@ public class FreefallCommand implements CommandExecutor {
 
         this.plugin.addTroll();
         this.plugin.addStats("Freefall", sender);
-        this.plugin.freefall.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.FREEFALL);
 
         target.setFlying(false);
         target.setGameMode(GameMode.SURVIVAL);
         target.teleport(new Location(target.getWorld(), target.getLocation().getX(), newY, target.getLocation().getZ()));
 
-        this.plugin.freefall.remove(target.getUniqueId());
+        TrollManager.deactivate(target.getUniqueId(), TrollType.FREEFALL);
         sender.sendMessage(StringManager.PREFIX + "§7" + target.getName() + " §eis freefalling from §7" + newY + " §emeters!");
     }
 }

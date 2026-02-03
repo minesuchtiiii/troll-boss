@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -18,10 +20,10 @@ public class GokillCommand implements CommandExecutor {
     private static final String ALREADY_ACTIVE = StringManager.PREFIX + "§cCan't do this right now!";
     private static final String MAX_VALUE_ERROR = StringManager.PREFIX + "§cCan't use that number, max allowed is %d!";
 
-    private final Main plugin;
+    private final TrollBoss plugin;
     private final int maxDelay = 3600;
 
-    public GokillCommand(Main plugin) {
+    public GokillCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 
@@ -76,7 +78,7 @@ public class GokillCommand implements CommandExecutor {
             player.sendMessage(StringManager.BYPASS);
             return false;
         }
-        if (plugin.goKill.contains(target.getUniqueId())) {
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.GOKILL)) {
             player.sendMessage(ALREADY_ACTIVE);
             return false;
         }
@@ -96,14 +98,10 @@ public class GokillCommand implements CommandExecutor {
                 StringManager.PREFIX, target.getName(), delay, formattedMinutes
         ));
 
-        plugin.goKill.add(target.getUniqueId());
-        Bukkit.getScheduler().scheduleSyncDelayedTask(
-                plugin,
-                () -> {
+        TrollManager.activate(target.getUniqueId(), TrollType.GOKILL);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     target.setHealth(0.0D);
-                    plugin.goKill.remove(target.getUniqueId());
-                },
-                delay * 20L
-        );
+                    TrollManager.deactivate(target.getUniqueId(), TrollType.GOKILL);
+                }, delay * 20L);
     }
 }

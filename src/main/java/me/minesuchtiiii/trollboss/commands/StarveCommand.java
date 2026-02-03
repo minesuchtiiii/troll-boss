@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -12,10 +14,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class StarveCommand implements CommandExecutor {
     private static final int MAX_COUNT = 20;
-    private final Main plugin;
+    private final TrollBoss plugin;
     private int foodScheduler;
 
-    public StarveCommand(Main plugin) {
+    public StarveCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 
@@ -57,7 +59,7 @@ public class StarveCommand implements CommandExecutor {
             return false;
         }
 
-        if (plugin.hunger.contains(targetPlayer.getUniqueId())) {
+        if (TrollManager.isActive(targetPlayer.getUniqueId(), TrollType.STARVE)) {
             player.sendMessage(String.format("%s§cCan't do this right now!", StringManager.PREFIX));
             return false;
         }
@@ -89,7 +91,7 @@ public class StarveCommand implements CommandExecutor {
     private void startStarveScheduler(Player player, Player targetPlayer, int count) {
         plugin.addTroll();
         plugin.addStats("Starve", player);
-        plugin.hunger.add(targetPlayer.getUniqueId());
+        TrollManager.activate(targetPlayer.getUniqueId(), TrollType.STARVE);
 
         player.sendMessage(String.format("%s§7%s §ewill starve!", StringManager.PREFIX, targetPlayer.getName()));
 
@@ -111,7 +113,7 @@ public class StarveCommand implements CommandExecutor {
 
     private void cancelStarvation(Player targetPlayer) {
         Bukkit.getScheduler().cancelTask(foodScheduler);
-        plugin.hunger.remove(targetPlayer.getUniqueId());
+        TrollManager.deactivate(targetPlayer.getUniqueId(), TrollType.STARVE);
         plugin.lvl = 0;
     }
 }

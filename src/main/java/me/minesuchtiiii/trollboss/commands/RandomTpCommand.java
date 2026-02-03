@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -14,11 +16,11 @@ import java.util.Random;
 
 public class RandomTpCommand implements CommandExecutor {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
     int schedu;
     int max = 50;
 
-    public RandomTpCommand(Main plugin) {
+    public RandomTpCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 
@@ -58,7 +60,7 @@ public class RandomTpCommand implements CommandExecutor {
             return true;
         }
 
-        if (plugin.randomtp.contains(target.getUniqueId())) {
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.RANDOMTP)) {
             player.sendMessage(StringManager.PREFIX + "§cCan't do this right now!");
             return true;
         }
@@ -70,7 +72,7 @@ public class RandomTpCommand implements CommandExecutor {
 
         plugin.addTroll();
         plugin.addStats("Randomteleport", player);
-        plugin.randomtp.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.RANDOMTP);
 
         player.sendMessage(StringManager.PREFIX + "§7" + target.getName()
                 + " §eis being teleported randomly §7" + count + " §etimes!");
@@ -83,7 +85,7 @@ public class RandomTpCommand implements CommandExecutor {
             public void run() {
                 if (teleportCount >= count) {
                     Bukkit.getScheduler().cancelTask(schedu);
-                    plugin.randomtp.remove(target.getUniqueId());
+                    TrollManager.deactivate(target.getUniqueId(), TrollType.RANDOMTP);
                     return;
                 }
 

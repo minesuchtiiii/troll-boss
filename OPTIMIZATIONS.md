@@ -5,10 +5,10 @@ This document outlines key areas for optimization and refactoring in the TrollBo
 ## 1. Architectural Improvements
 
 ### God Class Refactoring
-**Issue:** The `Main` class acts as a "God Class," managing over 3100 lines of code, dozens of public state fields, and varied logic from statistics to GUI creation.
+**Issue:** The `TrollBoss` class acts as a "God Class," managing over 3100 lines of code, dozens of public state fields, and varied logic from statistics to GUI creation.
 **Suggestion:** 
 - Implement a **Manager Pattern**. Create separate manager classes (e.g., `TrollManager`, `DataManager`, `GuiManager`, `TutorialManager`).
-- Use **Dependency Injection** to pass only necessary managers to commands and listeners, rather than the entire `Main` instance.
+- Use **Dependency Injection** to pass only necessary managers to commands and listeners, rather than the entire `TrollBoss` instance.
 - Define a `TrollPlayer` data object to store all state related to a specific player in one place, rather than across 50+ different maps.
 
 ### Command & GUI Logic
@@ -46,7 +46,7 @@ This document outlines key areas for optimization and refactoring in the TrollBo
 ## 3. Memory Usage & Object Lifecycle
 
 ### Massive Memory Leaks
-**Issue:** The `QuitListener` does not clear player data from the numerous maps and lists in `Main`. Data for every player ever trolled remains in memory until the server restarts.
+**Issue:** The `QuitListener` does not clear player data from the numerous maps and lists in `TrollBoss`. Data for every player ever trolled remains in memory until the server restarts.
 **Suggestion:**
 - Implement a comprehensive cleanup in `PlayerQuitEvent`.
 - **Better yet:** Store player data in a single `TrollPlayer` object and remove that object from a central map on quit.
@@ -58,7 +58,7 @@ This document outlines key areas for optimization and refactoring in the TrollBo
 - Reuse `Inventory` instances where appropriate or use a GUI library that handles caching.
 
 ### Public Field Access
-**Issue:** Almost all state in `Main` is stored in `public` fields, leading to "spaghetti code" where any class can modify any state.
+**Issue:** Almost all state in `TrollBoss` is stored in `public` fields, leading to "spaghetti code" where any class can modify any state.
 **Suggestion:**
 - Encapsulate state with private fields and provide controlled access through methods.
 
@@ -90,7 +90,7 @@ This document outlines key areas for optimization and refactoring in the TrollBo
 
 ### Instead of:
 ```java
-// In Main.java
+// In TrollBoss.java
 public ArrayList<UUID> frozen = new ArrayList<>();
 // In QuitListener.java
 public void onQuit(PlayerQuitEvent e) {

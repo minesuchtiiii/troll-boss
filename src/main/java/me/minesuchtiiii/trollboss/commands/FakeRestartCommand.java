@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -13,11 +13,11 @@ import java.text.DecimalFormat;
 
 public class FakeRestartCommand implements CommandExecutor {
     private static final int MAX_TIME = 120;
-    private final Main plugin;
+    private final TrollBoss plugin;
     private int counter;
     private int remainingTime;
 
-    public FakeRestartCommand(Main plugin) {
+    public FakeRestartCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 
@@ -91,7 +91,7 @@ public class FakeRestartCommand implements CommandExecutor {
     }
 
     private void announceRestart(int time) {
-        if (time == 120 || time == 90 || time == 60 || time == 30 || time <= 10) {
+        if (time % 30 == 0 || time <= 10) {
             plugin.restartMessage(time);
         }
     }

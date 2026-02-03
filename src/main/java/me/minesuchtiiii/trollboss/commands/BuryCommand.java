@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -14,9 +16,9 @@ public class BuryCommand implements CommandExecutor {
 
     private static final int MAX_BURY_TIME = 3600; // Max bury time in seconds (1hr)
     private static final int DEFAULT_BURY_DEPTH = 4; // Default bury depth in blocks
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public BuryCommand(Main plugin) {
+    public BuryCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 
@@ -72,7 +74,7 @@ public class BuryCommand implements CommandExecutor {
             executor.sendMessage(StringManager.BYPASS);
             return false;
         }
-        if (plugin.bury.contains(target.getUniqueId())) {
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.BURY)) {
             executor.sendMessage(StringManager.PREFIX + "§cThis player is already buried.");
             return false;
         }
@@ -97,7 +99,7 @@ public class BuryCommand implements CommandExecutor {
         plugin.yloc.put(target.getName(), location.getY());
         plugin.pitch.put(target.getName(), location.getPitch());
         plugin.yaw.put(target.getName(), location.getYaw());
-        plugin.bury.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.BURY);
     }
 
     private void teleportPlayerTo(Player target, double newY) {
@@ -109,7 +111,7 @@ public class BuryCommand implements CommandExecutor {
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             String targetName = target.getName();
 
-            plugin.bury.remove(target.getUniqueId());
+            TrollManager.deactivate(target.getUniqueId(), TrollType.BURY);
             plugin.yloc.remove(targetName);
 
             target.teleport(oldLocation);

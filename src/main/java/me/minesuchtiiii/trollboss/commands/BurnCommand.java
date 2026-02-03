@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -12,9 +12,9 @@ import org.jetbrains.annotations.NotNull;
 public class BurnCommand implements CommandExecutor {
 
     private static final int FIRE_TICK_DURATION = 100000000; // Introduced constant to improve clarity
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public BurnCommand(Main plugin) {
+    public BurnCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

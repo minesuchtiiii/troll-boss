@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -14,13 +16,13 @@ import org.jetbrains.annotations.NotNull;
 public class VoidCommand implements CommandExecutor {
     private static final long BLOCK_BREAK_DELAY = 4L; // Delay for breaking blocks
     private static final long BLOCK_REBUILD_DELAY = 2L; // Delay for rebuilding blocks
-    private final Main plugin;
+    private final TrollBoss plugin;
     private int voidScheduler;
     private int voidRebuildScheduler;
     private int blockBreakCounter = 0;
     private int blockRebuildCounter = 0;
 
-    public VoidCommand(Main plugin) {
+    public VoidCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 
@@ -68,7 +70,7 @@ public class VoidCommand implements CommandExecutor {
             return;
         }
 
-        if (this.plugin.isVoid) {
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.VOID)) {
             player.sendMessage(StringManager.PREFIX + "§cCan't do this right now!");
             return;
         }
@@ -82,14 +84,13 @@ public class VoidCommand implements CommandExecutor {
         plugin.addStats("Void", player);
         player.sendMessage(StringManager.PREFIX + "§eKilling §7" + target.getName() + " §ein void!");
 
-        this.plugin.isVoid = true;
-        this.plugin.voidDead.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.VOID);
         Location targetLocation = target.getLocation();
         int totalBlocks = calculateBlocksToVoid(targetLocation);
 
         saveOriginalBlocks(targetLocation, totalBlocks);
         scheduleBlockBreaking(targetLocation, totalBlocks);
-        scheduleBlockRebuilding(totalBlocks);
+        scheduleBlockRebuilding(target, totalBlocks);
     }
 
     private int calculateBlocksToVoid(Location location) {
@@ -120,22 +121,22 @@ public class VoidCommand implements CommandExecutor {
         }, 0L, BLOCK_BREAK_DELAY);
     }
 
-    private void scheduleBlockRebuilding(int totalBlocks) {
+    private void scheduleBlockRebuilding(Player target, int totalBlocks) {
         this.voidRebuildScheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.plugin, () -> {
             if (blockRebuildCounter < totalBlocks) {
                 Location blockLocation = this.plugin.blockloc.get(blockRebuildCounter);
                 blockLocation.getWorld().getBlockAt(blockLocation).setType(this.plugin.blockmat.get(blockRebuildCounter));
                 blockRebuildCounter++;
             } else {
-                cleanupAfterRebuild();
+                cleanupAfterRebuild(target);
             }
         }, totalBlocks * BLOCK_BREAK_DELAY, BLOCK_REBUILD_DELAY);
     }
 
-    private void cleanupAfterRebuild() {
+    private void cleanupAfterRebuild(Player target) {
         this.plugin.blockloc.clear();
         this.plugin.blockmat.clear();
-        this.plugin.isVoid = false;
+        TrollManager.deactivate(target.getUniqueId(), TrollType.VOID);
         Bukkit.getScheduler().cancelTask(voidRebuildScheduler);
         blockRebuildCounter = 0;
     }

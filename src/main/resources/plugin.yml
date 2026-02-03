@@ -1,6 +1,6 @@
 name: TrollBoss
 version: '${project.version}'
-main: me.minesuchtiiii.trollboss.main.Main
+main: me.minesuchtiiii.trollboss.TrollBoss
 api-version: '1.21'
 authors: [ Minesuchtiiii ]
 
@@ -170,8 +170,8 @@ commands:
   randomtroll:
     description: to pick a random troll for a player
     usage: /<command> <player>
-  shlong:
-    description: to shlong a player
+  schlong:
+    description: to schlong a player
     usage: /<command> <player>
 
 permissions:
@@ -239,4 +239,4 @@ permissions:
       troll.border: true
       troll.noob: true
       troll.randomtroll: true
-      troll.shlong: true
+      troll.schlong: true

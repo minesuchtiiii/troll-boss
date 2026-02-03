@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -11,9 +13,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class GarbageCommand implements CommandExecutor {
     private static final String USAGE_MESSAGE = StringManager.PREFIX + "§eUse §7/garbage [player] [on | off]";
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public GarbageCommand(Main plugin) {
+    public GarbageCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 
@@ -56,16 +58,14 @@ public class GarbageCommand implements CommandExecutor {
 
     private void toggleGarbageMode(Player executor, Player target, String action) {
         if ("on".equalsIgnoreCase(action)) {
-            if (!plugin.garbageTroll.contains(target.getUniqueId())) {
-                plugin.garbageTroll.add(target.getUniqueId());
+            if (!TrollManager.activate(target.getUniqueId(), TrollType.GARBAGE)) {
                 sendToggleMessage(executor, target, true);
             } else {
                 executor.sendMessage(StringManager.PREFIX + "§cGarbage mode already activated for this player!");
                 executor.sendMessage(USAGE_MESSAGE.replace("[player] [on | off]", target.getName() + " off"));
             }
         } else if ("off".equalsIgnoreCase(action)) {
-            if (plugin.garbageTroll.contains(target.getUniqueId())) {
-                plugin.garbageTroll.remove(target.getUniqueId());
+            if (TrollManager.deactivate(target.getUniqueId(), TrollType.GARBAGE)) {
                 sendToggleMessage(executor, target, false);
             } else {
                 executor.sendMessage(StringManager.PREFIX + "§cGarbage mode is not activated for this player!");

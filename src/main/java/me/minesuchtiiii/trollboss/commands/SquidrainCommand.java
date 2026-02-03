@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -17,12 +19,12 @@ public class SquidrainCommand implements CommandExecutor {
     private static final long SCHEDULER_PERIOD = 3L;
     private static final int SQUIDS_SPAWN_HEIGHT = 25;
 
-    private final Main plugin;
+    private final TrollBoss plugin;
     private final int maxSquidsAllowed = 100;
     private int spawnRounds = 0;
     private int scheduledTaskId;
 
-    public SquidrainCommand(Main plugin) {
+    public SquidrainCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 
@@ -99,7 +101,7 @@ public class SquidrainCommand implements CommandExecutor {
             return false;
         }
 
-        if (plugin.squidRaining.contains(target.getUniqueId())) {
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.SQUIDRAIN)) {
             executor.sendMessage(StringManager.PREFIX + "§cCan't do this right now!");
             return false;
         }
@@ -108,7 +110,7 @@ public class SquidrainCommand implements CommandExecutor {
     }
 
     private void startSquidRain(Player executor, Player target, int amount) {
-        plugin.squidRaining.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.SQUIDRAIN);
         plugin.addTroll();
         plugin.addStats("Squidrain", executor);
 
@@ -120,7 +122,7 @@ public class SquidrainCommand implements CommandExecutor {
                 spawnSquidAbovePlayer(target);
             }
             if (spawnRounds == amount) {
-                plugin.squidRaining.remove(target.getUniqueId());
+                TrollManager.deactivate(target.getUniqueId(), TrollType.SQUIDRAIN);
                 Bukkit.getScheduler().cancelTask(scheduledTaskId);
                 spawnRounds = 0;
             }

@@ -1,6 +1,7 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.GuiManager;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -15,9 +16,9 @@ public class TrollCommand implements CommandExecutor {
     private static final String PERMISSION_STATISTICS = "troll.statistics";
     private static final String PERMISSION_GUI = "troll.gui";
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public TrollCommand(Main plugin) {
+    public TrollCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 
@@ -64,7 +65,7 @@ public class TrollCommand implements CommandExecutor {
     }
 
     private void openTrollInventory(Player player) {
-        plugin.openTrollInv(player);
+        GuiManager.openTrollInv(player);
         player.sendMessage(StringManager.PREFIX + "§eFor more commands use §7/troll help §c[page]");
     }
 
@@ -102,7 +103,7 @@ public class TrollCommand implements CommandExecutor {
 
         if (plugin.canBeTrolled(target)) {
             if (player.hasPermission(PERMISSION_GUI)) {
-                plugin.openGui(player);
+                GuiManager.openGui(player);
                 plugin.trolling.put(player.getUniqueId(), target.getUniqueId());
             } else {
                 player.sendMessage(StringManager.NOPERM);

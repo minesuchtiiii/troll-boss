@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,9 +16,9 @@ import java.util.ArrayList;
 
 public class BadappleCommand implements CommandExecutor {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public BadappleCommand(Main plugin) {
+    public BadappleCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

@@ -1,6 +1,9 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollFlag;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import me.minesuchtiiii.trollboss.utils.Ufo;
 import org.bukkit.*;
@@ -13,14 +16,16 @@ import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AbductCommand implements CommandExecutor {
 
     private static final int ABDUCTION_DURATION = 85;
-    private final Main plugin;
+    private final TrollBoss plugin;
     private int task;
 
-    public AbductCommand(Main plugin) {
+    public AbductCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 
@@ -62,7 +67,7 @@ public class AbductCommand implements CommandExecutor {
             return true;
         }
 
-        if (plugin.playersBeingAbducted.contains(target.getUniqueId())) {
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.ABDUCT)) {
             player.sendMessage(StringManager.PREFIX + "§cCan't do this right now!");
             return true;
         }
@@ -72,12 +77,10 @@ public class AbductCommand implements CommandExecutor {
     }
 
     private void performAbduction(Player player, Player target) {
-        plugin.nomine.add(target.getUniqueId());
-        plugin.denyMove.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.ABDUCT);
 
         final Location location = target.getLocation();
         Ufo ufo = new Ufo(target, plugin);
-        plugin.playersBeingAbducted.add(target.getUniqueId());
         plugin.abductedCachedLocations.put(target.getUniqueId(), location);
 
         plugin.addTroll();
@@ -96,7 +99,7 @@ public class AbductCommand implements CommandExecutor {
         target.addPotionEffect(levitation);
         task = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             startY[0] = (int) target.getLocation().getY() + 4;
-            Main.spawnAbductParticlesWide(target, startY[0], goalY + 8);
+            spawnAbductParticlesWide(target, startY[0], goalY + 8);
             target.spawnParticle(Objects.requireNonNull(Registry.PARTICLE_TYPE.get(NamespacedKey.minecraft("elder_guardian"))), target.getLocation(), 1, null);
             target.playSound(target.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, (float) 0.67, 1);
 
@@ -104,13 +107,51 @@ public class AbductCommand implements CommandExecutor {
                 Bukkit.getScheduler().cancelTask(task);
                 target.clearActivePotionEffects();
                 target.teleport(target.getLocation().add(0, 7.5, 0));
-                plugin.denyMove.remove(target.getUniqueId());
+
+                // Once the player reaches the UFO he is able to move around again
+                TrollManager.suppressFlag(target.getUniqueId(), TrollType.ABDUCT, TrollFlag.PREVENT_GROUND_MOVEMENT);
+
                 Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     target.setHealth(20.0);
                     ufo.teleportBackFromUfo(target);
+                    TrollManager.deactivate(target.getUniqueId(), TrollType.ABDUCT);
                 }, 150L);
 
             }
         }, 1L, 20L);
+    }
+
+    public static void spawnAbductParticlesWide(Player p, int lower, int upper) {
+
+        final int points = 27;
+        final double size = 5;
+
+        // 1. Get references once outside of the loops
+        final World world = p.getWorld();
+        final Location origin = p.getLocation(); // Basis-Position
+        final Location workerLoc = origin.clone();
+
+        // Get reference to the random generator (much faster than new Random())
+        final ThreadLocalRandom random = ThreadLocalRandom.current();
+
+        for (double k = lower; k < upper; k += 3) {
+
+            workerLoc.setY(k);
+
+            for (int i = 0; i < 360; i += 360 / points) {
+
+                double angle = Math.toRadians(i);
+                double x = size * Math.cos(angle);
+                double z = size * Math.sin(angle);
+
+                workerLoc.setX(origin.getX() + x);
+                workerLoc.setZ(origin.getZ() + z);
+
+                double offY = random.nextDouble(0, 0.33);
+
+                world.spawnParticle(Particle.SOUL_FIRE_FLAME, workerLoc, 3, 0, offY, 0, 0.033, null, true);
+                world.spawnParticle(Particle.FLAME, workerLoc, 3, 0, offY, 0, 0.033, null, true);
+            }
+        }
     }
 }

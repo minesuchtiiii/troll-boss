@@ -1,6 +1,6 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -13,9 +13,9 @@ public class FakeopCommand implements CommandExecutor {
 
     private static final String PERMISSION_FAKEOP = "troll.fakeop";
     private static final String PERMISSION_BYPASS = "troll.bypass";
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public FakeopCommand(Main plugin) {
+    public FakeopCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 

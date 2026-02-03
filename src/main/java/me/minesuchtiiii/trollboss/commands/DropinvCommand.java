@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -11,9 +13,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class DropinvCommand implements CommandExecutor {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public DropinvCommand(Main plugin) {
+    public DropinvCommand(TrollBoss plugin) {
 
         this.plugin = plugin;
     }
@@ -79,9 +81,9 @@ public class DropinvCommand implements CommandExecutor {
         this.plugin.dropArmor(target);
 
         player.sendMessage(StringManager.PREFIX + "§7" + target.getName() + " §edropped all of his items!");
-        this.plugin.denyPickup.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.DROPINV);
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(this.plugin, () ->
-                this.plugin.denyPickup.remove(target.getUniqueId()), DELAY);
+                TrollManager.deactivate(target.getUniqueId(), TrollType.DROPINV), DELAY);
     }
 }

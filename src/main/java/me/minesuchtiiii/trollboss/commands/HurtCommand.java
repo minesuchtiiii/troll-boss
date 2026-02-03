@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.commands;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import me.minesuchtiiii.trollboss.utils.StringManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -18,10 +20,10 @@ public class HurtCommand implements CommandExecutor {
     private static final long TASK_INTERVAL = 25L;
     private static final int MIN_COUNT = 1;
     private static final int MAX_COUNT = 20;
-    private final Main plugin;
+    private final TrollBoss plugin;
     private int hurtScheduler;
 
-    public HurtCommand(Main plugin) {
+    public HurtCommand(TrollBoss plugin) {
         this.plugin = plugin;
     }
 
@@ -66,7 +68,7 @@ public class HurtCommand implements CommandExecutor {
             return;
         }
 
-        if (plugin.hurt.contains(target.getUniqueId())) {
+        if (TrollManager.isActive(target.getUniqueId(), TrollType.HURT)) {
             player.sendMessage(PREFIX + "§cCan't do this right now!");
             return;
         }
@@ -102,8 +104,7 @@ public class HurtCommand implements CommandExecutor {
     private void startHurtTask(Player player, Player target, int count) {
         plugin.addTroll();
         plugin.addStats("Hurt", player);
-        plugin.hurt.add(target.getUniqueId());
-        plugin.deadHurt.add(target.getUniqueId());
+        TrollManager.activate(target.getUniqueId(), TrollType.HURT);
         player.sendMessage(PREFIX + "§7" + target.getName() + " §ewill be hurt!");
 
         hurtScheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
@@ -126,7 +127,6 @@ public class HurtCommand implements CommandExecutor {
 
     private void stopHurtTask(Player target) {
         Bukkit.getScheduler().cancelTask(hurtScheduler);
-        plugin.hurt.remove(target.getUniqueId());
-        plugin.deadHurt.remove(target.getUniqueId());
+        TrollManager.deactivate(target.getUniqueId(), TrollType.HURT);
     }
 }

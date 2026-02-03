@@ -1,6 +1,8 @@
 package me.minesuchtiiii.trollboss.utils;
 
-import me.minesuchtiiii.trollboss.main.Main;
+import me.minesuchtiiii.trollboss.TrollBoss;
+import me.minesuchtiiii.trollboss.manager.TrollManager;
+import me.minesuchtiiii.trollboss.trolls.TrollType;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -13,9 +15,9 @@ import java.util.UUID;
 // Should probably be replaced by using a schematic and FAWE
 public class Ufo {
 
-    private final Main plugin;
+    private final TrollBoss plugin;
 
-    public Ufo(Player player, Main plugin) {
+    public Ufo(Player player, TrollBoss plugin) {
 
         this.plugin = plugin;
         UUID playerUUID = player.getUniqueId();
@@ -348,14 +350,13 @@ public class Ufo {
     public void teleportBackFromUfo(Player p) {
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            UUID playerUUID = p.getUniqueId();
 
             p.setHealth(20D);
-            p.teleport(plugin.abductedCachedLocations.get(p.getUniqueId()));
-            plugin.abductedCachedLocations.remove(p.getUniqueId());
-            plugin.playersBeingAbducted.remove(p.getUniqueId());
+            p.teleport(plugin.abductedCachedLocations.get(playerUUID));
+            plugin.abductedCachedLocations.remove(playerUUID);
             Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> p.setGameMode(GameMode.SURVIVAL), 10L);
-            plugin.nomine.remove(p.getUniqueId());
-            removeUfo(p.getUniqueId());
+            removeUfo(playerUUID);
 
         }, 15 * 20L);
 
@@ -375,4 +376,3 @@ public class Ufo {
         }
     }
 }
-
